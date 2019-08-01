@@ -18,6 +18,9 @@
 		include 'header.php';
 		include 'admin/'.$page_name.'.php'; 
 		include 'footer.php';
+
+    include 'offer.php';
+    
 	?>
 
 <script src="<?php echo base_url('assets/backend/lib/js/jquery-3.3.1.min.js')?>"></script>
@@ -50,6 +53,53 @@
   {
    $('#sub-categories').html('<option value="">Select State</option>');
   }
+ });
+
+ $('.offerCheckbox').click(function(){
+    
+  var product_id = $(this).data("id");
+
+            if($(this).prop("checked") == true){
+                $('#discountModale').modal('show');
+                $('#discount_form')[0].reset();
+                $('#product_id').val(product_id);               
+
+            }
+
+            else if($(this).prop("checked") == false){
+                $.ajax({
+    // url:"{{ route('shopping_cart.removeOffer')}}",
+    url:"<?php echo base_url(); ?>/admin/removeOffer",
+    method:"POST",
+    data:{id:product_id},
+    success:function(data)
+    {
+        // alert(data);
+     alert("Product removed from Offer ");
+    },
+    error: function(data){
+        alert("fail" + ' ' + this.data)
+    }
+   });
+
+            }
+
+  $('#discount_form').on('submit', function(event){
+        event.preventDefault();
+        var form_data = $(this).serialize();
+        $.ajax({
+            url:"<?php echo base_url(); ?>/admin/setOffer",
+            method:"POST",
+            data:form_data,
+            dataType:"json",
+            success:function(data)
+            {
+                
+            }
+        })
+    });
+  
+
  });
 
     });

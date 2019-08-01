@@ -90,9 +90,14 @@ class User_Model extends CI_Model{
 
 
 	// Updates Student Profile
-	public function update_std_profle($email = '', $std_name = ''){
+	public function update_std_profle($email, $name,$address,$city,$country,$zip,$phone){
 		$data = array(
-  		  'name' => $std_name
+  		  'name' => $name,
+  		  'address' => $address,
+  		  'city' => $city,
+  		  'country' => $country,
+  		  'zip' => $zip,
+  		  'phone' => $phone
 		);
 
 		$this->db->where('email', $email);

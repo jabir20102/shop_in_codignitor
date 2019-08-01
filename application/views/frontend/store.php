@@ -56,7 +56,7 @@
                 if(!empty($_GET['sub_category'])){
                         $sub_category=$_GET['sub_category'];
                       } 
-                foreach($sub_categories as $sub_cat)
+                     foreach($sub_categories as $sub_cat)
                     {
                         if (in_array($sub_cat->id, $sub_category)){
                           $checked="checked";
@@ -69,8 +69,8 @@
                     }
                    ?>
                </ul>
-                <button type="submit" class="btn btn-block fables-second-background-color rounded-0 white-color white-color-hover p-2 font-15 mb-4">Filter</button>
-                    </form>
+                  <button type="submit" class="btn btn-block fables-second-background-color rounded-0 white-color white-color-hover p-2 font-15 mb-4" <?php if($offer==true) echo "disabled"; ?> >Filter</button>
+                </form>
 
                <h2 class="font-16 semi-font fables-forth-text-color fables-light-gary-background  p-3 my-4">Top Sells</h2>
                <?php  
@@ -119,16 +119,27 @@
                    <?php    
                     
             
+                
+                 
                 foreach($products as $product){
-                 $images = $this->crud_model->get_images($product->id);
-                 $wishlist=$this->user_model->check_wishlist($product->id);
+                   if($offer==true){
+                    $product=$this->crud_model->get_products($product->product_id);
+                  }
+            $images = $this->crud_model->get_images($product->id);
+             $wishlist=$this->user_model->check_wishlist($product->id);
+             $isOffer=$this->crud_model->get_offer_products($product->id);
+                
             ?>
      
 
-                   <div class="col-12 col-sm-6 col-lg-4 fables-product-block">
+                   <div class=" col-sm-6 col-md-4 col-lg-3 fables-product-block">
                            <div class="card rounded-0 mb-4">
-                               <div class="row">
+                               <div class="row"> 
                                    <div class="fables-product-img col-12">
+                                    <?php  if($isOffer!=null){
+                                          echo '<span  class="sale fables-second-background-color text-center">
+                                        '.($isOffer->percent*100).'% Off</span>';
+                                       }  ?>
                                       <img class="card-img-top rounded-0" src="<?php if(count($images)>0) echo base_url($images[0]->url); ?>" alt="dress fashion">
                                       <div class="fables-img-overlay">                                          
                                           <ul class="nav fables-product-btns">
@@ -155,8 +166,16 @@
                                         <a href="<?php echo base_url('product/'.$product->slug.'/'.$product->id);?>" class="fables-main-text-color fables-store-product-title fables-second-hover-color"><?php echo $product->title; ?></a>
                                     </h5>
                                     <p class="store-card-text fables-fifth-text-color font-15 mx-xl-3"><?php echo $product->description; ?></p>
-                                    <p class="font-15 font-weight-bold fables-second-text-color my-2 mx-xl-3">Rs <?php echo $product->price; ?></p>
-                                    <input type="text" name="quantity" class="form-control quantity" id="<?php echo $product->id; ?>" value="1" hidden/><br />
+                                    <p class="font-15 font-weight-bold fables-second-text-color my-2 mx-xl-3">
+                                      Rs <?php  
+                                      if($isOffer!=null){
+                                       echo '<del>'.$product->price.'</del>  '.($product->price*(1-$isOffer->percent)); 
+                                       }else{
+                                        echo $product->price;
+                                       }
+                                         ?>
+                                         </p>
+                                    
                                 <p class="fables-product-info">                       
                             <button type="button" name="add_cart" class="btn fables-second-border-color fables-second-text-color fables-btn-rouned fables-hover-btn-color font-14 p-2 px-2 px-xl-4 add_cart" data-productname="<?php echo $product->title; ?>" data-price="<?php echo $product->price; ?>" data-productid="<?php echo $product->id; ?>" data-url="<?php if(count($images)>0) echo base_url($images[0]->url); ?>" /><span class="fables-iconcart"></span> 
                                     <span class="fables-btn-value">ADD TO CART</span></button></p>
@@ -164,14 +183,11 @@
                                </div>
                             </div>
                        </div>   
-                       <!-- product ends                              -->
+                       <!-- product ends -->
                      <?php
             }
             if(count($products)==0){
-              echo "
-              
-              <h4 style='margin:10px 20px'>No such match found</h4>
-              ";
+              echo '<h4>No result found</h4>';
             }
 
           ?>  
@@ -186,51 +202,8 @@
 
            </div>
      </div>
-  <!-- HOT DEAL SECTION -->
-<div id="hot-deal" class="section">
-<!-- container -->
-<div class="container">
-<!-- row -->
-<div class="row">
-    <div class="col-md-12">
-        <div class="hot-deal">
-            <ul class="hot-deal-countdown">
-                <li>
-                    <div>
-                        <h3 id="days">02</h3>
-                        <span>Days</span>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h3 id="hours">10</h3>
-                        <span>Hours</span>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h3 id="mints">34</h3>
-                        <span>Mins</span>
-                    </div>
-                </li>
-                  <li>
-                    <div>
-                        <h3 id="secs">34</h3>
-                        <span>Secs</span>
-                    </div>
-                </li>
-               
-            </ul>
-            <h2 class="text-uppercase">hot deal this week</h2>
-            <p>New Collection Up to 50% OFF</p>
-            <a class="primary-btn cta-btn" href="{{route('mystore', 'HotDeals')}}">Shop now</a>
-        </div>
-    </div>
-</div>
-<!-- /row -->
-</div>
-<!-- /container -->
-</div>
-<!-- /HOT DEAL SECTION -->
+ <?php
+include('hot-deal.php');
+ ?>
 </div> 
 <!-- /End page content -->

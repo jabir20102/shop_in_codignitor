@@ -44,6 +44,12 @@
     <!-- FABLES CUSTOM CSS RESPONSIVE FILE -->
     <link href="<?php echo base_url('assets/custom/css/custom-responsive.css')?>" rel="stylesheet">
     
+    
+    <style type="text/css">
+      .sale{
+        position: relative;padding: inherit;margin: inherit;color: white;
+      }
+    </style>
 	
 
 </head>
@@ -53,13 +59,6 @@
 		$student = $this->session->userdata('student_login');
 
 		include('header.php');
-
-		// if($student){
-		// 	include 'loged_in_header.php';
-		// }
-		// else{
-		// 	include 'header.php';
-		// }
 		include $page_name.'.php'; 
 		include 'footer.php';
 	?>
@@ -77,6 +76,21 @@
 <script src="<?php echo base_url('assets/vendor/owlcarousel/owl.carousel.min.js')?>"></script> 
 <script src="<?php echo base_url('assets/custom/js/custom.js')?>"></script> 
 
+<script type="text/javascript">
+    <!-- var myVar = setInterval(timer, 1000); -->
+    function timer(){
+         var d = new Date();
+  var day = d.getDay();
+  var hour = d.getHours();
+  var min=d.getMinutes();
+  var secs=d.getSeconds();
+  document.getElementById("days").innerHTML = 6-day;
+  document.getElementById("hours").innerHTML = 24-hour;
+  document.getElementById("mints").innerHTML = 60-min;
+  document.getElementById("secs").innerHTML = 60-secs;
+    }
+   
+</script>
 
 
 <script type="text/javascript">
@@ -159,11 +173,11 @@
   //   cart operation
    $('.add_cart').click(function(){
   var product_id = $(this).data("productid");
-  var product_name = $(this).data("productname");
-  var product_price = $(this).data("price");
+  // var product_name = $(this).data("productname");
+  // var product_price = $(this).data("price");
   var url = $(this).data("url");
-  // var quantity = $('#' + product_id).val();
-
+  var quantity = $('#' + product_id).val();
+// alert(product_id);
   var quantity = $('#input-val').val();
   if(quantity==null){
     quantity=1;
@@ -172,12 +186,14 @@
    $.ajax({
     url:"<?php echo base_url(); ?>Home/add_to_cart",
     method:"POST",
-    data:{product_id:product_id, product_name:product_name, product_price:product_price, quantity:quantity,url:url},
+    // data:{product_id:product_id, product_name:product_name, product_price:product_price, quantity:quantity,url:url},
+    data:{product_id:product_id, quantity:quantity,url:url},
     success:function(data)
     {
+      // alert(data);
      alert("Product Added into Cart");
      $('#cart_details').html(data);
-     $('#' + product_id).val('');
+     // $('#' + product_id).val('');
     }
    });
  

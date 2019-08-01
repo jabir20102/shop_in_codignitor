@@ -21,24 +21,44 @@
 							</div>
 						</div>
 					</div>
+
 					<div class="col-sm-6 col-md-3 my-2 text-center">
 						<div class="border border-warning rounded">
 							<div class="num my-4">
 								<?php
 								 echo count($this->user_model->get_students());
 								  ?> <br>
+								Students
+
+								
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-sm-6 col-md-3 my-2 text-center">
+						<div class="border border-warning rounded">
+							<div class="num my-4">
+								
+
+								<?php
+								$user_id=$this->session->userdata('student_id');
+					            $orders = $this->crud_model->get_orders($user_id);
+								 echo count($orders);
+								  ?> <br>
 								Orders
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-6 col-md-3 my-2 text-center">
+				<div class="col-sm-6 col-md-3 my-2 text-center">
 						<div class="border border-primary rounded">
 							<div class="num my-4">
-								<?php echo count($this->crud_model->get_products()); ?> <br>
+								<?php echo count($this->crud_model->get_products()); 
+								?> <br>
 								Products
 							</div>
 						</div>
-					</div>
+					</div>	
+
 					
 				
 					

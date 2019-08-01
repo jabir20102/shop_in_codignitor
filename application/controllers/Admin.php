@@ -443,6 +443,21 @@ class Admin extends CI_Controller{
 			redirect(base_url('admin'),'refresh');
 		}
 	}
+	// set offer 
+	public function setOffer(){		
+		 $product_id=$_POST['id'];
+		 $percent=$_POST['percent'];
+		$this->crud_model->add_offer($product_id,$percent);
+
+	}
+	// removeOffer  
+	public function removeOffer(){
+
+		
+		$product_id=$_POST['id'];
+		$this->crud_model->delete_expire_offers($product_id);
+
+	}
 //  all comments
 	public function all_comments($action = ''){
 
@@ -521,7 +536,42 @@ class Admin extends CI_Controller{
 		}
 	}
 	
+	public function orders(){
 
+		if($this->session->userdata('admin_login')){
+			// if admin is logged in loads up the admin profile page
+			$data['page_title'] = 'Orders';
+			$data['page_name'] = 'orders';
+			$data['active'] = 'orders';
+			$this->load->view('backend/index', $data, FALSE);
+		}
+		else{
+			// if admin is not loggedin
+			redirect(base_url('admin'),'refresh');
+		}
+
+	}
+	//  view user
+public function viewUser($id){
+
+		if($this->session->userdata('admin_login')){
+			// if admin is logged in loads up the admin profile page
+			 $user = $this->user_model->get_students('',$id);
+			 if($user==null){
+			 	show_404();
+			 }
+			$data['page_title'] = 'View User';
+			$data['page_name'] = 'viewUser';
+			$data['active'] = 'students';
+			$data['user'] = $user;
+			$this->load->view('backend/index', $data, FALSE);
+		}
+		else{
+			// if admin is not loggedin
+			redirect(base_url('admin'),'refresh');
+		}
+
+	}
 	public function profile(){
 
 		if($this->session->userdata('admin_login')){
@@ -646,7 +696,7 @@ class Admin extends CI_Controller{
                      $config['maintain_ratio'] = true;  
                      $config['quality'] = '100%';  
                      $config['width'] = 200;  
-                     $config['height'] = 200;  
+                     // $config['height'] = 200;  
                      $config['new_image'] = './uploads/products/images/'.$data["file_name"];  
                      $this->load->library('image_lib', $config);  
                      $this->image_lib->resize();  
@@ -728,6 +778,110 @@ class Admin extends CI_Controller{
 			// if admin is not logged in
 			redirect(base_url('admin'),'refresh');
 		}
+
+	}
+	// placeOrder
+	public function placeOrder(){
+			if($this->input->post('terms')==null) {
+        		$this->session->set_flashdata('error', 'Please Check the Terms & Conditions');
+				$this->session->set_flashdata('class', 'alert-danger alert mt-3');
+				redirect(base_url('checkout'),'refresh');
+        }
+		    $email =$this->input->post('email');
+			$name = $this->input->post('name');
+			$address = $this->input->post('address');
+			$city = $this->input->post('city');
+			$country = $this->input->post('country');
+			$zip = $this->input->post('zip');
+			$phone = $this->input->post('phone');
+			$comment = $this->input->post('comment');
+
+			$output='
+			<style>
+			th ,tr,td {border:1px solid grey;}
+			.area{width:250px;}
+			</style>
+			<table class="table table-bordered">
+			<tr><td><b>Name</b></td><td>'.$name.'</td></tr>
+			<tr><td><b>Email</b></td><td>'.$email.'</td></tr>
+			<tr><td><b>Phone No</b></td><td>'.$phone.'</td></tr>
+			<tr><td><b>Address</b></td><td class="area">'.$address.'</td></tr>
+			<tr><td><b>Zip</b></td><td>'.$zip.'</td></tr>
+			<tr><td><b>City</b></td><td>'.$city.'</td></tr>
+			<tr><td><b>Country</b></td><td>'.$country.'</td></tr>
+			<tr><td><b>User Comments</b></td><td>'.$comment.'</td></tr>
+			</table>';
+
+			$products_out='';
+			$products_out.='<table class="table table-bordered">
+			<th>Product Title</th><th>Qty</th><th>Price</th>';
+
+			foreach($this->cart->contents() as $item){
+			 $products_out.='
+				<tr>
+				<td class="area">'.$item["name"].'</td>
+				<td>'.$item["qty"].'</td>
+				<td>'.$item["subtotal"].'</td>
+				</tr>
+				';				
+			}
+			$products_out.='
+			<tr><td colspan="3">Total= Rs '.$this->cart->total().'</td></tr>
+			</table>';
+			 $message='
+			<div>
+			<div style="float:left;">'.$output.'</div>
+			<div style="float:left;">'.$products_out.'</div>
+			</div>
+			';
+			 $subject = 'New Order By - ' . $this->input->post("name");
+			  $config = Array(
+		         'protocol'  => 'smtp',
+		         'smtp_host' => 'smtp.googlemail.com',
+		         'smtp_port' => 465,
+		         'smtp_user' => 'mjabir42@gmail.com', 
+		         'smtp_pass' => '$jabirkhan11', 
+		         'mailtype'  => 'html',
+		         'charset'  => 'iso-8859-1',
+		         'smtp_crypto'   => 'ssl',
+		         'wordwrap'  => TRUE
+		      );
+		       	$this->load->library('email');
+			    $this->email->initialize($config);
+			    $this->email->set_newline("\r\n");
+			    $this->email->from($email);
+			    $this->email->to("pakcricket131@gmail.com");
+			    $this->email->subject($subject);
+			    $this->email->message($message);
+
+			  
+			    
+        if(!$this->email->send()) {
+        		$this->session->set_flashdata('error', 'An error accured while sending order');
+				$this->session->set_flashdata('class', 'alert-danger alert mt-3');
+				redirect(base_url('checkout'),'refresh');
+        }else{
+        	  $user = $this->user_model->get_students($this->session->userdata('student_email'));
+			    if($user){
+			    	$user=$user->id;
+			    }else{
+			    	$user=$name;
+			    }
+        	$order_id=$this->crud_model->add_order($user);
+			    foreach($this->cart->contents() as $item){
+			    	$id=$item['id'];
+			        $category=$this->crud_model->get_products($id)->category;
+			         $offer= $item["offer"];
+			         $qty= $item["qty"];
+			        $this->crud_model->add_sells($id,$order_id,$offer,$category,$qty);
+			    }
+			    
+        	 $this->cart->destroy();
+        		$this->session->set_flashdata('error', 'Your order is placed <br>Thank You for Shopping....');
+				$this->session->set_flashdata('class', 'alert-success alert mt-3');
+				redirect(base_url('checkout'),'refresh');
+        }
+
 
 	}
 

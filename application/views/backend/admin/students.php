@@ -55,7 +55,7 @@
 
 				  			echo '<tr>';
 				  			echo '<td><img class="rounded-circle" src="'.$image_src.'" width="45"></td>';
-				  			echo '<td>'.$student->name.'</td>';
+				  			echo '<td><a href="'.base_url('admin/viewUser/'.$student->id).'" >'.$student->name.'</td>';
 				  			echo '<td>'.$student->email.'</td>';
 				  			echo '<td><form action="'.base_url('admin/students/delete').'" method="post"><input type="hidden" name="student-id" value="'.$student->id.'"><button type="submit" class="btn btn-danger">Delete</button></form></td>';
 				  			echo '</tr>';
@@ -74,3 +74,4 @@
 		</div><!-- end col -->
 	</div> <!-- end row -->
 </div> <!-- end container -->
+

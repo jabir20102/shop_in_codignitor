@@ -224,6 +224,48 @@ class CRUD_Model extends CI_Model{
 			return $query->result();
 		}
 	}
+	// add offer product
+public function add_offer($product_id,$percent){
+
+		$data = array(
+			'product_id' => $product_id,
+			'percent' => $percent,
+			'added_date' => date('Y-m-d')
+		);
+
+		// return $data;
+		$query = $this->db->insert('offer', $data);
+		   return  $query;
+	}	
+	//  delete expire offers
+	public function delete_expire_offers($product_id=''){
+		if($product_id!==''){
+		$query = $this->db->delete('offer', array('product_id' => $product_id));
+		return $query;
+		}
+		$this->db->query("DELETE FROM offer where added_date < DATE_SUB(NOW(), INTERVAL 7 DAY)");
+	}
+	// GETTING ALL offer products  
+	public function get_offer_products($prod_id='', $limit = '', $offset = ''){
+		if($prod_id !== ''){
+			$query = $this->db->get_where('offer', array('product_id' => $prod_id));
+			return $query->row();
+		}
+		 if( $limit !== '' ){
+			// echo "order by visits";
+		$this->db->order_by('id', 'DESC');
+			$query = $this->db->limit($limit, $offset)
+							  ->get('offer');
+			return $query->result();
+		}else{
+		// getting all offer prodducts
+			// echo "else";
+		$query = $this->db->get('offer');		
+		$this->db->order_by('id', 'DESC');
+		return $query->result();
+	}
+	}
+
 	
 
 // GETTING ALL images  BY product ID  
@@ -330,6 +372,60 @@ class CRUD_Model extends CI_Model{
 
 							  
  }
+ // add an order
+ public function add_order($user){
+ 	$data = array(
+			'user_id' => $user,
+			'added_date' => date('Y-m-d')
+		);
+
+		// return $data;
+		$query = $this->db->insert('orders', $data);
+		   $insertId = $this->db->insert_id();
+		   return  $insertId;
+ }
+ // add an order
+ public function add_sells($product_id,$order_id,$offer,$category,$quantity){
+ 	if($offer=='') $offer=0;
+ 	$data = array(
+			'product_id' => $product_id,
+			'order_id'   => $order_id,
+			'offer'      => $offer,
+			'category'   => $category,
+			'quantity'   => $quantity
+		);
+
+		// return $data;
+		$query = $this->db->insert('sells', $data);
+		   return  $query;
+ }
+ // GETTING ALL order OR BY TUTORIAL ID  
+	public function get_orders($user_id = '', $limit = '', $offset = ''){
+		if($user_id !== '' && $limit==''){
+			// getting specific tutorial if tutorial id is passed in parameter
+			$query = $this->db->get_where('orders', array('user_id' => $user_id));
+			return $query->result();
+		}
+		else if($limit !== '' && $user_id!='' ){
+			$query = $this->db->order_by("id", "DESC")->limit($limit, $offset)
+							  ->get_where('orders', array('user_id' => $user_id));
+			return $query->result();
+		}
+		else if($limit !== '' && $user_id=='' ){
+			$query = $this->db->order_by("id", "DESC")->limit($limit, $offset)
+							  ->get('orders');
+
+			return $query->result();
+		}
+		else{
+		$query = $this->db->get('orders');	
+		return $query->result();
+	}
+	}
+	public function get_sells($order_id){
+		$query = $this->db->get_where('sells', array('order_id' => $order_id));
+			return $query->result();
+	}
  //   load top sells 
 public function top_sells($cat_id){
 

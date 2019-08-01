@@ -99,24 +99,29 @@ public function profile(){
 		
 	}
 
-	// TO CHANGE THE STUDENT NAME
-	public function change_name(){
+	// TO CHANGE THE STUDENT info
+	public function change_info(){
 		if($this->session->userdata('student_login')){
 			// if student is logged in
 
 			$email = $this->session->userdata('student_email');
-			$new_name = $this->input->post('new-name');
+			$name = $this->input->post('name');
+			$address = $this->input->post('address');
+			$city = $this->input->post('city');
+			$country = $this->input->post('country');
+			$zip = $this->input->post('zip');
+			$phone = $this->input->post('phone');
 
 			// updating the new student name in student table
-			$this->user_model->update_std_profle($email, $new_name);
+			$this->user_model->update_std_profle($email, $name,$address,$city,$country,$zip,$phone);
 
 			// updating student name in session variable
 			// because student name is diplayed in view via this session variable
-			$this->session->set_userdata('student_name', $new_name);
+			$this->session->set_userdata('student_name', $name);
 
-			$this->session->set_flashdata('profile-error', 'Profile Updated Successfuly');
-			$this->session->set_flashdata('profile-class', 'alert alert-success mt-3');
-			redirect(base_url('student/edit-profile'),'refresh');
+			$this->session->set_flashdata('error', 'Profile Updated Successfuly');
+			$this->session->set_flashdata('class', 'alert alert-success mt-3');
+			redirect(base_url('user/profile'),'refresh');
 
 		}
 		else{

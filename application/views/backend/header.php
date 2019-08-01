@@ -1,8 +1,8 @@
     <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
-            <div class="sidebar-header">
-                <h3 class="text-center"><a href="<?php echo base_url(); ?>">TREP</a></h3>
+             <div class="sidebar-header">
+                <a class="navbar-brand pl-0" href="<?php echo base_url(); ?>"><img src="<?php echo base_url('assets/custom/images/fables-logo.png') ?>" alt="Fables Template" class="fables-logo"></a>
             </div>
 
             <ul class="list-unstyled components">
@@ -17,15 +17,19 @@
                     <a href="<?php echo base_url('admin/categories'); ?>">Categories</a>
                 </li>
                 <li class="<?php if($active == 'students'){echo 'active';} ?>">
-                    <a href="<?php echo base_url('admin/students'); ?>">Students</a>
+                    <a href="<?php echo base_url('admin/students'); ?>">Registered User</a>
                 </li>
                 
                 <li class="<?php if($active == 'all-tutorials'){echo 'active';} ?>">
                     <a href="<?php echo base_url('admin/all-tutorials'); ?>">All Tutorials</a>
                 </li>
+                 <li class="<?php if($active == 'orders'){echo 'active';} ?>">
+                    <a href="<?php echo base_url('admin/orders'); ?>">Orders</a>
+                </li>
                 <li class="<?php if($active == 'all-comments'){echo 'active';} ?>">
                     <a href="<?php echo base_url('admin/all-comments'); ?>">All Comments</a>
                 </li>
+               
                
 
                 <li class="<?php if($active == 'profile'){echo 'active';} ?>">
@@ -54,10 +58,10 @@
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded">
                 <div class="container-fluid">
 
-                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                    <button type="button" id="sidebarCollapse" class="btn btn-dark">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="btn btn-primary d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars"></i>
                     </button>
 

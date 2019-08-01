@@ -1,4 +1,6 @@
-
+<?php
+ $user = $this->user_model->get_students($this->session->userdata('student_email'));
+?>
 <!--Start Breadcrumbs -->
 <div class="fables-light-gary-background">
     <div class="container"> 
@@ -11,7 +13,11 @@
     </div>
 </div>
 <!-- /End Breadcrumbs -->
-
+<div class="container">
+	<?php
+	include('flash.php');
+	?>
+</div>
 
 		<!-- SECTION -->
 		<div class="section">
@@ -21,7 +27,7 @@
 				<div class="row">
 
 					<div class="col-md-7">
-					<form action="" method="post">	
+					<form action="<?php echo base_url('admin/placeOrder'); ?>" method="post">	
 						
 					 
 						<!-- Billing Details -->
@@ -30,25 +36,26 @@
 								<h3 class="title">Billing address</h3>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="fullname"  value="" placeholder="Full Name">
+								<input class="input" type="text" name="name"  value="<?php if($user) echo $user->name; ?>" placeholder="Full Name" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="email" name="email" value="" placeholder="Email">
+								<input class="input" type="email" name="email" value="<?php if($user) echo $user->email; ?>" placeholder="Email" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="address" placeholder="Address">
+								<input class="input" type="text" name="address" value="<?php if($user) echo $user->address; ?>" placeholder="Address" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="city" placeholder="City">
+								<input class="input" type="text" name="city" value="<?php if($user) echo $user->city; ?>" placeholder="City" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="country" placeholder="Country">
+								<input class="input" type="text" name="country" value="<?php if($user) echo $user->country; ?>" placeholder="Country" required>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
+								<input class="input" type="text" name="zip" value="<?php if($user) echo $user->zip; ?>" placeholder="ZIP Code">
 							</div>
 							<div class="form-group">
-								<input class="input" type="tel" name="tel" placeholder="Telephone">
+								<input class="input" type="tel" name="phone" value
+								="<?php if($user) echo $user->phone; ?>" placeholder="Telephone" required>
 							</div>
 							</div>
 						<!-- /Billing Details -->
@@ -57,7 +64,7 @@
 
 						<!-- Order notes -->
 						<div class="order-notes">
-							<textarea class="input" placeholder="Order Notes"></textarea>
+							<textarea class="input" name="comment" placeholder="Order Notes"></textarea>
 						</div>
 						<!-- /Order notes -->
 					</div>
@@ -114,10 +121,10 @@
 							
 						</div>
 						<div class="input-checkbox">
-							<input type="checkbox" id="terms">
+							<input type="checkbox" id="terms" name="terms">
 							<label for="terms">
 								<span></span>
-								I've read and accept the <a href="#">terms & conditions</a>
+								I've read and accept the <a href="">terms & conditions</a>
 							</label>
 						</div>                     
                             <button class="primary-btn order-submit">Place order</button>

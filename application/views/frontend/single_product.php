@@ -33,7 +33,9 @@
                    $images = $this->crud_model->get_images($product->id);
                    ?>
                      <div id="sync1" class="owl-carousel owl-theme">
+
                       <?php
+
                       foreach($images as $image){
                         ?>
                          <div class="item">
@@ -60,8 +62,12 @@
                  </div>
           </div> 
           <div class="col-12 col-lg-6 col-12 col-lg-6 mt-3 mt-lg-0">
+            <?php  if($isOffer!=null){
+                                          echo '<span  class="sale fables-second-background-color text-center">
+                                        '.($isOffer->percent*100).'% Off</span>';
+                                       }  ?>
               <h2 class="fables-main-text-color font-20 semi-font"><?php echo $product->title;  ?></h2>
-          
+              
               <div class="fables-forth-text-color fables-single-tags mt-3">
                   <span class="fables-fifth-text-color fables-icontags"></span> 
                   <a href="#"><?php echo $category->cat_name;  ?></a>
@@ -109,7 +115,15 @@
               <div class="row mb-5">
                   <div class="col-12 col-sm-7 text-center text-md-left"> 
                       <span class="fables-fifth-text-color"><span class="fables-iconprice"></span> Price :</span> 
-                      <span class="fables-second-text-color font-20 font-weight-bold">Rs <?php echo $product->price;  ?></span> 
+                      <span class="fables-second-text-color font-20 font-weight-bold">
+                         Rs <?php  
+                                      if($isOffer!=null){
+                                       echo '<del>'.$product->price.'</del>  '.($product->price*(1-$isOffer->percent)); 
+                                       }else{
+                                        echo $product->price;
+                                       }
+                                       ?>
+                      </span> 
                   </div>
                   <div class="col-9 col-md-4 col-lg-5 mt-3 mt-sm-0 mr-auto ml-auto mr-md-0 ml-md-auto">
                       <div class="fables-calc fables-light-background-color fables-btn-rouned">

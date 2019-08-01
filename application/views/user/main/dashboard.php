@@ -28,7 +28,9 @@
 						<div class="border border-warning rounded">
 							<div class="num my-4">
 								<?php
-								 echo count($this->user_model->get_students());
+								$user_id=$this->session->userdata('student_id');
+					            $orders = $this->crud_model->get_orders($user_id);
+								 echo count($orders);
 								  ?> <br>
 								Orders
 							</div>

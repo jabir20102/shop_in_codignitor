@@ -13,7 +13,11 @@
     </div>
 </div>
 <!-- /End Breadcrumbs -->
-     
+      <div class="container">
+      <?php
+         include('flash.php');
+      ?> 
+    </div>
 <!-- Start page content --> 
     <div class="container"> 
             <div class="row overflow-hidden">
@@ -55,18 +59,18 @@
                
         <div class="row mb-4 mb-md-5 overflow-hidden">
                 <div class="col-12 col-sm-6 wow fadeInLeft">
-                    <form class="fables-contact-form">
+                    <form action="<?php echo base_url('contact'); ?>"  class="fables-contact-form" method="post">
                       <div class="form-group"> 
-                        <input type="text" class="form-control rounded-0 p-3"  placeholder="Name">   
+                        <input type="text" name="name" class="form-control rounded-0 p-3"  placeholder="Name" required>   
                       </div>
                       <div class="form-group"> 
-                        <input type="email" class="form-control rounded-0 p-3" placeholder="Email">
+                        <input type="email" name="email" class="form-control rounded-0 p-3" placeholder="Email" required>
                       </div>
                       <div class="form-group"> 
-                        <input type="text" class="form-control rounded-0 p-3" placeholder="Subject">   
+                        <input type="text" name="subject" class="form-control rounded-0 p-3" placeholder="Subject">   
                       </div>
                       <div class="form-group"> 
-                          <textarea class="form-control rounded-0 p-3" placeholder="Message" rows="3"></textarea>
+                          <textarea name="msg" class="form-control rounded-0 p-3" placeholder="Message" rows="3" required></textarea>
                       </div>                       
                       <button type="submit" class="btn fables-second-background-color rounded-0 text-white btn-block p-3">Send</button>
                     </form>

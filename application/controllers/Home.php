@@ -4,11 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Home extends CI_Controller{
 
 	public function __construct(){
-		parent::__construct();
+		parent::__construct();	
 
-		
+		$this->crud_model->delete_expire_offers();
 	}
-
 
 	// FOR HOME PAGE
 	public function index(){
@@ -31,16 +30,16 @@ class Home extends CI_Controller{
    {
     $output .= '
     <div class="fables-comments">
-                          <p>
-                              <span class="fables-fifth-text-color font-14">Posted By</span>
-                              <a href="" class="fables-forth-text-color fables-second-hover-color font-15 bold-font ml-1">'. $comment->name.'</a>
-                              <span class="fables-forth-text-color float-right font-14">'.$comment->added_date.'</span>
-                          </p>
-                          <p class="font-14 fables-fifth-text-color">
-                             '.$comment->comment.' 
-                          </p>
-                      </div>
-                      <hr>
+      <p>
+          <span class="fables-fifth-text-color font-14">Posted By</span>
+          <a href="" class="fables-forth-text-color fables-second-hover-color font-15 bold-font ml-1">'. $comment->name.'</a>
+          <span class="fables-forth-text-color float-right font-14">'.$comment->added_date.'</span>
+      </p>
+      <p class="font-14 fables-fifth-text-color">
+         '.$comment->comment.' 
+      </p>
+  </div>
+  <hr>
     ';
    }
   }
@@ -56,16 +55,22 @@ class Home extends CI_Controller{
 			show_404();
 		}
 
-		$product = $this->crud_model->get_products($id);
+		   $product = $this->crud_model->get_products($id);
+		   if($product==null){
+		   	show_404();
+		   }
 			//if student view the tutorial details then view is counted
 			$count = $product->visits + 1;
 			$result = $this->crud_model->update_tutorial_view_count($id, $count);
-		
+
+			$isOffer=$this->crud_model->get_offer_products($product->id);
+			
 		 $category=$this->crud_model->get_categories($product->category);
 
 		$data['page_title'] = $product->title;
 		$data['page_name'] = 'single_product';
 		$data['product'] = $product;
+		$data['isOffer'] = $isOffer;
 		$data['active'] = url_title($category->cat_name, 'dash', TRUE);
 		
 
@@ -109,6 +114,7 @@ class Home extends CI_Controller{
 		$data['category_name'] = ucwords($slug);
 		$data['sub_categories'] = $sub_categories;
 		$data['products'] = $products;
+		$data['offer'] = false;
 		$data['active'] = $slug;
 		
 		$this->load->view('frontend/index', $data, FALSE);
@@ -160,9 +166,48 @@ class Home extends CI_Controller{
 		$data['page_title'] = $category->cat_name.' Products';
 		$data['page_name'] = 'store';
 		$data['category'] = $id;
+		$data['category_name']=$category->cat_name;
 		$data['sub_categories'] = $sub_categories;
 		$data['products'] = $products;
+		$data['offer'] = false;
 		$data['active'] = url_title($category->cat_name, 'dash', TRUE);
+		
+		$this->load->view('frontend/index', $data, FALSE);
+	}
+	// TO SHOW offer products
+	public function offer_products(){
+		$offers = $this->crud_model->get_offer_products();
+		//config for the pagition
+            $config = array(
+              'base_url' => base_url('offer-products'),
+              'total_rows' => count($offers),
+              'per_page' => 6
+            );
+
+            $this->pagination->initialize($config);
+
+            $page = $this->input->get('page');
+            if(!isset($page)){
+              // offset for the first page will be zero
+              $offset = $this->input->get('page');
+            }
+            else{
+              // offset for the other than first page
+              $offset = $this->input->get('page')*$config['per_page']-$config['per_page'];
+            }
+
+            $products = $this->crud_model->get_offer_products('',$config['per_page'],$offset);
+
+		
+
+		$data['page_title'] = "Offer Products ";
+		$data['page_name'] = 'store';
+		$data['category'] = 1;
+		$data['category_name']='Offers';
+		$data['sub_categories']  = array();
+		$data['products'] = $products;
+		$data['offer'] = true;
+		$data['active'] = 'home';
 		
 		$this->load->view('frontend/index', $data, FALSE);
 	}
@@ -177,6 +222,43 @@ class Home extends CI_Controller{
 		$data['active'] = 'contactUs';
 		
 		$this->load->view('frontend/index', $data, FALSE);
+	}
+	// contact us
+	public function contact(){
+			 $name=$this->input->post('name');
+			 $email=$this->input->post('email');
+			 $subject=$this->input->post('subject');
+			 $msg='  From:-'.$name.'<br><br>'.$this->input->post('msg');
+			$config = Array(
+		         'protocol'  => 'smtp',
+		         'smtp_host' => 'smtp.googlemail.com',
+		         'smtp_port' => 465,
+		         'smtp_user' => 'mjabir42@gmail.com', 
+		         'smtp_pass' => '$jabirkhan11', 
+		         'mailtype'  => 'html',
+		         'charset'  => 'iso-8859-1',
+		         'smtp_crypto'   => 'ssl',
+		         'wordwrap'  => TRUE
+		      );
+		       	$this->load->library('email');
+			    $this->email->initialize($config);
+			    $this->email->set_newline("\r\n");
+			    $this->email->from($email);
+			    $this->email->to("pakcricket131@gmail.com");
+			    $this->email->subject($subject);
+			    $this->email->message($msg);
+
+			  
+			    
+        if($this->email->send()) {
+			    $this->session->set_flashdata('error', 'Thank you for your suggestion....');
+				$this->session->set_flashdata('class', 'alert-success alert mt-3');
+				redirect(base_url('contactUs'),'refresh');
+        }else{
+				$this->session->set_flashdata('error', 'An error accured while sending your suggestion...');
+				$this->session->set_flashdata('class', 'alert-danger alert mt-3');
+				redirect(base_url('contactUs'),'refresh');
+        }
 	}
 // TO SHOW about us page
 	public function about(){
@@ -226,13 +308,28 @@ class Home extends CI_Controller{
 		//  add_to_cart
 		function add_to_cart()
  {
+ 	$id=$_POST["product_id"];
+ 	$product=$this->crud_model->get_products($id);
+ 	$isOffer=$this->crud_model->get_offer_products($id);
+ 	
+ 	if($isOffer!=null){
+ 		$percent=$isOffer->percent;
+ 		$price=$product->price*(1-$percent); 
+	 	$offer=true;
+	 }else{
+ 		$price=$product->price;
+ 		$offer=false;
+ 		$percent='';
+
+	 }
   $this->load->library("cart");
   $data = array(
-   "id"  => $_POST["product_id"],
+   "id"  => $id,
    "url" => $_POST["url"],
-   "name"  => $_POST["product_name"],
+   "name"  => $product->title,
    "qty"  => $_POST["quantity"],
-   "price"  => $_POST["product_price"]
+   "price"  => $price,
+   "offer"  => $percent
   );
   $this->cart->insert($data); //return rowid 
   echo $this->view_cart();
@@ -272,11 +369,16 @@ class Home extends CI_Controller{
   $count = 0;
   foreach($this->cart->contents() as $items)
   {
+  	$offers='';
+  	if($items["offer"]!=''){
+  		$offers= '<span  class="sale fables-second-background-color text-center">
+                                        '.($items["offer"]*100).'% Off</span>';
+  	}
    $count++;
    $output .= '
    <div class="row mx-0 mb-3">
                                                  <div class="col-4 p-0">
-                                                     <a href="'. base_url('product/'.url_title($items["name"], 'dash', TRUE).'/'.$items["id"]).'"><img src="'. $items["url"].'" alt="" class="w-100"></a>
+                                                     <a href="'. base_url('product/'.url_title($items["name"], 'dash', TRUE).'/'.$items["id"]).'">'.$offers.'<img src="'. $items["url"].'" alt="" class="w-100"></a>
                                                                                                       </div>
                                                  <div class="col-8">
                                                      <h2><a href="'. base_url('product/'.url_title($items["name"], 'dash', TRUE).'/'.$items["id"]).'" class="fables-main-text-color font-13 d-block fables-main-hover-color">'.$items["name"].'</a></h2>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2019 at 11:06 AM
+-- Generation Time: Aug 01, 2019 at 04:43 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -84,26 +84,7 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `product_id`, `name`, `email`, `comment`, `added_date`, `isApproved`) VALUES
-(6, 3, 'laravel', 'mjabir42@gmail.com', 'commentscommentscommentscomments', '2019-07-24', 1),
-(9, 3, 'Hashir', 'aamir.shinka@yahoo.com', 'this is comment by hashir khan', '2019-07-24', 1),
-(10, 3, 'khan', 'mjabir42@gmail.com', 'fables-commentsfables-commentsfables-commentsfables-comments', '2019-07-24', 1),
-(11, 3, 'laravel', 'mjabir42@gmail.com', 'djkclkqswx', '2019-07-24', 1),
-(12, 3, 'jabir', 'mjabir43@gmail.com', '\r\n  $this->db->order_by(\"id\", \"DESC\");', '2019-07-24', 1),
-(13, 3, 'jabir', 'mjabir42@gmail.com', 'this is commeny', '2019-07-24', 1),
-(14, 3, 'Jabir khan', 'mjabir42@gmail.com', 'Thus comment is posted from mobile phone', '2019-07-25', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `enrollment`
---
-
-CREATE TABLE `enrollment` (
-  `id` int(11) NOT NULL,
-  `student_id` int(11) NOT NULL,
-  `tutorial_id` int(11) NOT NULL,
-  `date_added` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+(1, 12, 'Mobiles', 'mjabir42@gmail.com', 'this is comments', '2019-07-29', 1);
 
 -- --------------------------------------------------------
 
@@ -122,35 +103,54 @@ CREATE TABLE `images` (
 --
 
 INSERT INTO `images` (`id`, `product_id`, `url`) VALUES
-(2, 3, 'uploads/products/images/profile2.jpg'),
-(3, 4, 'uploads/products/images/forms2.PNG'),
-(4, 5, 'uploads/products/images/Capture.PNG'),
-(5, 6, 'uploads/products/images/IMG_20180826_085423.jpg'),
-(6, 7, 'uploads/products/images/IMG_20180629_131645.jpg'),
-(7, 7, 'uploads/products/images/IMG_20180704_121443_886.jpg'),
-(9, 9, 'uploads/products/images/IMG_20180825_184404_-_Copy.jpg'),
-(10, 10, 'uploads/products/images/IMG_20180616_091517.jpg'),
-(21, 10, 'uploads/products/images/IMG_20180704_121443_886.jpg'),
-(24, 10, 'uploads/products/images/IMG_20190726_202146.jpg'),
-(27, 9, 'uploads/products/images/profile_phot.jpg'),
-(29, 11, 'uploads/products/images/IMG_20180704_121443_8861.jpg'),
-(30, 11, 'uploads/products/images/slider1.jpg'),
-(31, 11, 'uploads/products/images/slider2.jpg');
+(32, 12, 'uploads/products/images/indexk.jpg'),
+(33, 12, 'uploads/products/images/shirts.jpg'),
+(34, 13, 'uploads/products/images/images.jpg'),
+(35, 13, 'uploads/products/images/index.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `interactive_lessons`
+-- Table structure for table `offer`
 --
 
-CREATE TABLE `interactive_lessons` (
+CREATE TABLE `offer` (
   `id` int(11) NOT NULL,
-  `title` varchar(500) NOT NULL,
-  `instructions` text NOT NULL,
-  `section_id` int(11) NOT NULL,
-  `tutorial_id` int(11) NOT NULL,
-  `date_added` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `product_id` int(11) NOT NULL,
+  `percent` varchar(5) NOT NULL,
+  `added_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `offer`
+--
+
+INSERT INTO `offer` (`id`, `product_id`, `percent`, `added_date`) VALUES
+(121, 12, '0.1', '2019-07-30'),
+(122, 13, '0.2', '2019-08-01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `user_id` varchar(50) NOT NULL,
+  `added_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `added_date`) VALUES
+(1, '8', '2019-07-30'),
+(2, 'Ayan', '2019-07-15'),
+(8, '8', '2019-08-01'),
+(9, '8', '2019-08-01'),
+(10, '8', '2019-08-01');
 
 -- --------------------------------------------------------
 
@@ -177,14 +177,8 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `title`, `slug`, `description`, `details`, `price`, `category`, `sub_category`, `tags`, `visits`, `date_added`) VALUES
-(3, 'Nayak full Hindi dubbed movie.. ramcharan super hero', 'nayak-full-hindi-dubbed-movie-ramcharan-super-hero', 'Dayavan (1988) Full Hindi Movie | Vinod Khanna, Madhuri Dixit, Feroz Khan, Aditya Pancholi\r\nDayavan (1988) Full Hindi Movie | Vinod Khanna, Madhuri Dixit, Feroz Khan, Aditya Pancholi', 'Dayavan (1988) Full Hindi Movie | Vinod Khanna, Madhuri Dixit, Feroz Khan, Aditya Pancholi\r\nDayavan (1988) Full Hindi Movie | Vinod Khanna, Madhuri Dixit, Feroz Khan, Aditya Pancholi\r\nDayavan (1988) Full Hindi Movie | Vinod Khanna, Madhuri Dixit, Feroz Khan, Aditya Pancholi', 1400, 6, 2, 'tag1 tag22', 10, '2019-07-24'),
-(4, 'fvvf', 'fvvf', 'xfdghjklk', 'cgfhgjkl', 1200, 7, 4, 'tags', 4, '2019-07-24'),
-(5, 'Aap Mujhe Achche Lagne Lage', 'aap-mujhe-achche-lagne-lage', 'Aap Mujhe Achche Lagne Lage (HD) | Full Movie | Hrithik Roshan | Amisha Patel| Bollywood Hit MoviesAap Mujhe Achche Lagne Lage (HD) | Full Movie | Hrithik Roshan | Amisha Patel| Bollywood Hit Movies', 'Aap Mujhe Achche Lagne Lage (HD) | Full Movie | Hrithik Roshan | Amisha Patel| Bollywood Hit MoviesAap Mujhe Achche Lagne Lage (HD) | Full Movie | Hrithik Roshan | Amisha Patel| Bollywood Hit MoviesAap Mujhe Achche Lagne Lage (HD) | Full Movie | Hrithik Roshan | Amisha Patel| Bollywood Hit Movies', 1100, 6, 2, 'tgas are here', 13, '2019-07-25'),
-(6, 'Please Select Sub Category According to Parent Category', 'please-select-sub-category-according-to-parent-category', 'page-link rounded-circle fables-forth-text-color fables-page-link fables-second-hover-background-colorpage-link rounded-circle fables-forth-text-color fables-page-link fables-second-hover-background-colorpage-link rounded-circle fables-forth-text-color fa', 'page-link rounded-circle fables-forth-text-color fables-page-link fables-second-hover-background-colorpage-link rounded-circle fables-forth-text-color fables-page-link fables-second-hover-background-colorpage-link rounded-circle fables-forth-text-color fables-page-link fables-second-hover-background-color', 1300, 7, 3, 'tag are her', 28, '2019-07-25'),
-(7, 'DateTime', 'datetime', 'page-link rounded-circle fables-forth-text-color fables-page-link fables-second-hover-background-colorpage-link rounded-circle fables-forth-text-color fables-page-link fables-second-hover-background-colorpage-link rounded-circle fables-forth-text-color fa', 'page-link rounded-circle fables-forth-text-color fables-page-link fables-second-hover-background-colorpage-link rounded-circle fables-forth-text-color fables-page-link fables-second-hover-background-colorpage-link rounded-circle fables-forth-text-color fables-page-link fables-second-hover-background-color', 1480, 6, 1, 'tags are here', 15, '2019-07-25'),
-(9, 'this is best product to sale.', 'this-is-best-product-to-sale', 'page-link rounded-circle fables-forth-text-color fables-page-link fables-second-hover-background-colorpage-link rounded-circle fables-forth-text-color fables-page-link fables-second-hover-background-colorpage-link rounded-circle fables-forth-text-color fa', 'page-link rounded-circle fables-forth-text-color fables-page-link fables-second-hover-background-colorpage-link rounded-circle fables-forth-text-color fables-page-link fables-second-hover-background-color', 890, 6, 1, 'tags are here', 25, '2019-07-25'),
-(10, 'this is mobile phone sub_cat oppo', 'this-is-mobile-phone-sub_cat-oppo', 'if($sub_cat!=null){\r\n			$sub_cat_filter = implode(\"\',\'\", $sub_cat);\r\n			$query .= \"AND sub_category IN(\'\".$sub_cat_filter.\"\') \";\r\n		}', 'if($sub_cat!=null){\r\n			$sub_cat_filter = implode(\"\',\'\", $sub_cat);\r\n			$query .= \"AND sub_category IN(\'\".$sub_cat_filter.\"\') \";\r\n		}', 6700, 6, 2, 'tags are here', 9, '2019-07-26'),
-(11, 'Create New Tutorial', 'create-new-tutorial', 'Create New TutorialCreate New TutorialCreate New TutorialCreate New Tutorial\r\nCreate New TutorialCreate New Tutorial', 'Create New TutorialCreate New Tutorial\r\n\r\nCreate New TutorialCreate New Tutorial\r\n\r\nCreate New TutorialCreate New Tutorial', 500, 7, 3, 'tag', 9, '2019-07-27');
+(12, 'T shirts new designs', 't-shirts-new-designs', 'description about t shirt..... jabirdescription about t shirt..... jabirdescription about t shirt..... jabirdescription about t shirt..... jabir', 'description about t shirt..... jabirdescription about t shirt..... jabirdescription about t shirt..... jabirdescription about t shirt..... jabir', 900, 7, 4, 'tag1', 29, '2019-07-29'),
+(13, 'New Jeans pants for men', 'new-jeans-pants-for-men', '\r\n    Add new Product\r\n    Categories\r\n    Students\r\n    All Tutorials\r\n    All Comments\r\n    Profile\r\n    Log Out\r\n\r\n    Jabir Khan\r\n\r\nCreate New Product\r\n', '\r\n    Add new Product\r\n    Categories\r\n    Students\r\n    All Tutorials\r\n    All Comments\r\n    Profile\r\n    Log Out\r\n\r\n    Jabir Khan\r\n\r\nCreate New Product\r\n', 1300, 7, 5, 'tag', 9, '2019-07-29');
 
 -- --------------------------------------------------------
 
@@ -200,20 +194,6 @@ CREATE TABLE `ratings` (
   `review` text,
   `date_added` date NOT NULL,
   `last_modified` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `reported_tutorials`
---
-
-CREATE TABLE `reported_tutorials` (
-  `id` int(11) NOT NULL,
-  `student_id` int(11) NOT NULL,
-  `tutorial_id` int(11) NOT NULL,
-  `report_reason` text NOT NULL,
-  `date_added` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -237,22 +217,23 @@ CREATE TABLE `sections` (
 CREATE TABLE `sells` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `offer` varchar(20) NOT NULL DEFAULT '0',
   `category` int(11) NOT NULL,
-  `date` date NOT NULL
+  `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sells`
 --
 
-INSERT INTO `sells` (`id`, `product_id`, `category`, `date`) VALUES
-(1, 10, 6, '2019-07-01'),
-(2, 11, 6, '2019-07-23'),
-(3, 5, 6, '2019-07-15'),
-(4, 7, 6, '2019-07-21'),
-(5, 9, 6, '2019-07-08'),
-(6, 9, 6, '2019-07-24'),
-(7, 3, 6, '2019-07-22');
+INSERT INTO `sells` (`id`, `product_id`, `order_id`, `offer`, `category`, `quantity`) VALUES
+(1, 12, 1, '0.1', 7, 1),
+(2, 13, 1, '0', 7, 2),
+(3, 12, 8, '0.1', 7, 1),
+(4, 13, 8, '0', 7, 1),
+(5, 13, 9, '0', 7, 1),
+(6, 13, 10, '0', 7, 1);
 
 -- --------------------------------------------------------
 
@@ -266,6 +247,11 @@ CREATE TABLE `student` (
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `image_url` varchar(500) DEFAULT NULL,
+  `address` varchar(255) NOT NULL,
+  `city` varchar(120) NOT NULL,
+  `country` varchar(120) NOT NULL,
+  `zip` int(11) NOT NULL,
+  `phone` varchar(20) NOT NULL,
   `preferences` text,
   `date_added` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -274,11 +260,10 @@ CREATE TABLE `student` (
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`id`, `name`, `email`, `password`, `image_url`, `preferences`, `date_added`) VALUES
-(1, 'Rosita Janka Student', 'sheraz5006@gmail.com', 'abc123', 'uploads/frontend/user_images/students/index-video.jpg', '{\r\n				\"categories\": [2,1],\r\n				\"skill_level\": \"all\"\r\n			}', '2019-03-23'),
-(6, 'khan', 'mjabir42@gmail.com', 'khan1234', '', '', '2019-07-28'),
-(7, 'Jabir Khan', 'mjabir421@gmail.com', 'khan1234', '', '', '2019-07-28'),
-(8, 'khan', 'jabir20102@yahoo.com', 'jabirkhan12', '', '', '2019-07-28');
+INSERT INTO `student` (`id`, `name`, `email`, `password`, `image_url`, `address`, `city`, `country`, `zip`, `phone`, `preferences`, `date_added`) VALUES
+(1, 'Rosita Janka Student', 'sheraz5006@gmail.com', 'abc123', 'uploads/frontend/user_images/students/index-video.jpg', '', '', '', 0, '', '{\r\n				\"categories\": [2,1],\r\n				\"skill_level\": \"all\"\r\n			}', '2019-03-23'),
+(6, 'khan', 'mjabir42@gmail.com', 'khan1234', '', '', '', '', 0, '', '', '2019-07-28'),
+(8, 'Jabir khan', 'jabir20102@yahoo.com', 'jabirkhan12', '', 'this is address of jabir khan updated', 'Attock', 'Pakistan', 42420, '3155395245', '', '2019-07-28');
 
 -- --------------------------------------------------------
 
@@ -299,7 +284,8 @@ CREATE TABLE `sub_categories` (
 INSERT INTO `sub_categories` (`id`, `sub_cat_name`, `parent_cat_id`) VALUES
 (1, 'Samsung', 6),
 (2, 'Oppo', 6),
-(4, 'shirts', 7);
+(4, 'shirts', 7),
+(5, 'Jeans', 7);
 
 -- --------------------------------------------------------
 
@@ -352,22 +338,6 @@ CREATE TABLE `tutorials` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `video_lessons`
---
-
-CREATE TABLE `video_lessons` (
-  `id` int(11) NOT NULL,
-  `title` varchar(500) NOT NULL,
-  `duration` int(11) NOT NULL,
-  `section_id` int(11) NOT NULL,
-  `tutorial_id` int(11) NOT NULL,
-  `video_url` text NOT NULL,
-  `date_added` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `wishlist`
 --
 
@@ -382,12 +352,8 @@ CREATE TABLE `wishlist` (
 --
 
 INSERT INTO `wishlist` (`id`, `product_id`, `student_id`) VALUES
-(1, 11, 1),
-(3, 9, 1),
-(5, 4, 7),
-(6, 5, 1),
-(7, 7, 1),
-(8, 6, 8);
+(10, 12, 8),
+(11, 13, 8);
 
 --
 -- Indexes for dumped tables
@@ -415,14 +381,6 @@ ALTER TABLE `comments`
   ADD KEY `product_id` (`product_id`);
 
 --
--- Indexes for table `enrollment`
---
-ALTER TABLE `enrollment`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique combination of sid and tid` (`student_id`,`tutorial_id`) USING BTREE,
-  ADD KEY `fk_etid_tid` (`tutorial_id`);
-
---
 -- Indexes for table `images`
 --
 ALTER TABLE `images`
@@ -430,12 +388,17 @@ ALTER TABLE `images`
   ADD KEY `product_id` (`product_id`);
 
 --
--- Indexes for table `interactive_lessons`
+-- Indexes for table `offer`
 --
-ALTER TABLE `interactive_lessons`
+ALTER TABLE `offer`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_isid_sid` (`section_id`),
-  ADD KEY `fk_itid_tid` (`tutorial_id`);
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `product`
@@ -454,14 +417,6 @@ ALTER TABLE `ratings`
   ADD KEY `fk_rtid_tid` (`tutorial_id`);
 
 --
--- Indexes for table `reported_tutorials`
---
-ALTER TABLE `reported_tutorials`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique combination of sid and tid` (`student_id`,`tutorial_id`) USING BTREE,
-  ADD KEY `fk_retid_tid` (`tutorial_id`);
-
---
 -- Indexes for table `sections`
 --
 ALTER TABLE `sections`
@@ -473,7 +428,8 @@ ALTER TABLE `sections`
 --
 ALTER TABLE `sells`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `order_id` (`order_id`);
 
 --
 -- Indexes for table `student`
@@ -507,14 +463,6 @@ ALTER TABLE `tutorials`
   ADD KEY `teacher_id` (`teacher_id`);
 
 --
--- Indexes for table `video_lessons`
---
-ALTER TABLE `video_lessons`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_vsid_sid` (`section_id`),
-  ADD KEY `fk_vtid_tid` (`tutorial_id`);
-
---
 -- Indexes for table `wishlist`
 --
 ALTER TABLE `wishlist`
@@ -542,42 +490,36 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT for table `enrollment`
---
-ALTER TABLE `enrollment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
--- AUTO_INCREMENT for table `interactive_lessons`
+-- AUTO_INCREMENT for table `offer`
 --
-ALTER TABLE `interactive_lessons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `offer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `reported_tutorials`
---
-ALTER TABLE `reported_tutorials`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -590,7 +532,7 @@ ALTER TABLE `sections`
 -- AUTO_INCREMENT for table `sells`
 --
 ALTER TABLE `sells`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `student`
@@ -602,7 +544,7 @@ ALTER TABLE `student`
 -- AUTO_INCREMENT for table `sub_categories`
 --
 ALTER TABLE `sub_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `teacher`
@@ -617,16 +559,10 @@ ALTER TABLE `tutorials`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `video_lessons`
---
-ALTER TABLE `video_lessons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
@@ -639,24 +575,16 @@ ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `enrollment`
---
-ALTER TABLE `enrollment`
-  ADD CONSTRAINT `fk_esid_sid` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_etid_tid` FOREIGN KEY (`tutorial_id`) REFERENCES `tutorials` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `images`
 --
 ALTER TABLE `images`
   ADD CONSTRAINT `images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `interactive_lessons`
+-- Constraints for table `offer`
 --
-ALTER TABLE `interactive_lessons`
-  ADD CONSTRAINT `fk_isid_sid` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_itid_tid` FOREIGN KEY (`tutorial_id`) REFERENCES `tutorials` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `offer`
+  ADD CONSTRAINT `offer_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `product`
@@ -672,13 +600,6 @@ ALTER TABLE `ratings`
   ADD CONSTRAINT `fk_rtid_tid` FOREIGN KEY (`tutorial_id`) REFERENCES `tutorials` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `reported_tutorials`
---
-ALTER TABLE `reported_tutorials`
-  ADD CONSTRAINT `fk_resid_sid` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_retid_tid` FOREIGN KEY (`tutorial_id`) REFERENCES `tutorials` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `sections`
 --
 ALTER TABLE `sections`
@@ -688,7 +609,8 @@ ALTER TABLE `sections`
 -- Constraints for table `sells`
 --
 ALTER TABLE `sells`
-  ADD CONSTRAINT `sells_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `sells_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sells_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `sub_categories`
@@ -703,13 +625,6 @@ ALTER TABLE `tutorials`
   ADD CONSTRAINT `tutorials_ibfk_1` FOREIGN KEY (`cat_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tutorials_ibfk_2` FOREIGN KEY (`sub_cat_id`) REFERENCES `sub_categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tutorials_ibfk_3` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `video_lessons`
---
-ALTER TABLE `video_lessons`
-  ADD CONSTRAINT `fk_vsid_sid` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_vtid_tid` FOREIGN KEY (`tutorial_id`) REFERENCES `tutorials` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `wishlist`

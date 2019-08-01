@@ -13,8 +13,10 @@
 				  <thead>
 				    <tr>
 				      <th>Title</th>
+				      <th>Price</th>
 				      <th>Category</th>
 				      <th>Photos</th>
+				      <th>Offer</th>
 				      <th>Actions</th>
 				    </tr>
 				  </thead>
@@ -46,17 +48,26 @@
 			  		$products = $this->crud_model->get_products('','id',$config['per_page'],$offset);
 
 					foreach($products as $product){
+						$offer=$this->crud_model->get_offer_products($product->id);
+						 if($offer==null){
+				         $checkbox=  '<input class="offerCheckbox" data-id="'.$product->id.'" type="checkbox">';
+				        }else{
+				    $checkbox= '<input class="offerCheckbox" data-id="'.$product->id.'" type="checkbox" checked >';
+				        }
 
 						$cat = $this->crud_model->get_categories($product->category);
 						 // /'.$tutorials[$index]->slug.'/'.$tutorials[$index]->id);
 						echo '<tr>';
 				    	echo '<td><a href="'. base_url('product/'.$product->slug.'/'.$product->id).'" class="fables-main-text-color fables-store-product-title fables-second-hover-color">'.$product->title.'</a></td>';
+				    	echo '<td>'.$product->price.'</td>';
 				    	echo '<td>'.$cat->cat_name.'</td>';
 				    	echo '<td>  
 
 				    	<!-- <form action="'.base_url('admin/all-tutorials/photos').'" method="post"><input type="hidden" name="tut-id" value="'.$product->id.'"><button type="submit" class="btn btn-primary">Photos</button></form>  -->
 				    	<a class="btn btn-primary" href="'.base_url('admin/all-tutorials/photos/?product-id='.$product->id).'">Photos</a>
 				    	</td>';
+				    	echo '
+				    	<td>'.$checkbox.'</td>';
 				    	echo '<td><form action="'.base_url('admin/all-tutorials/delete').'" method="post"><input type="hidden" name="tut-id" value="'.$product->id.'"><button type="submit" class="btn btn-danger">Delete</button></form></td>';
 					}
 

@@ -3,7 +3,7 @@
 		<div class="col mx-auto bg-light rounded">
 			<div class="border-bottom">
 				<div class="container-fluid">
-					<h3 class="pt-4 pb-3">My Orders</h3>
+					<h3 class="pt-4 pb-3">Orders</h3>
 				</div>
 			</div>
 			
@@ -13,6 +13,7 @@
 				  <thead>
 				    <tr>
 				      <th>S. No</th>
+				      <th>User</th>
 				      <th>Date</th>
 				      <th>Products</th>
 				    </tr>
@@ -21,12 +22,11 @@
 
 
 					<?php
-					$user_id=$this->session->userdata('student_id');
-					$orders = $this->crud_model->get_orders($user_id);
+					$orders = $this->crud_model->get_orders();
 
 					//config for the pagition
 			  		$config = array(
-			  			'base_url' => base_url('user/orders'),
+			  			'base_url' => base_url('admin/orders'),
 			  			'total_rows' => count($orders),
 			  			'per_page' => 3
 			  		);
@@ -43,7 +43,7 @@
 			  			$offset = $this->input->get('page')*$config['per_page']-$config['per_page'];
 			  		}
 
-			  		$orders = $this->crud_model->get_orders($user_id,$config['per_page'],$offset);
+			  		$orders = $this->crud_model->get_orders('',$config['per_page'],$offset);
 			  		$i=0;
 					foreach($orders as $order){
 						$i++;
@@ -51,8 +51,11 @@
 
 						echo '<tr>';
 				    	echo '<td>'.($i+$offset).'</td>';
+				    	echo '
+				    	<td><a href="'.base_url('admin/viewUser/'.$order->user_id).'" class="btn btn-success btn-sm" >View User</td>
+				    	';
 				    	echo '<td>'.$order->added_date.'</td>';
-				    	$prod='<td><table>';
+				    	$prod='<td><table class="table table-bordered"">';
 				    	foreach ($sells as $sell) {
 				    		$product=$this->crud_model->get_products($sell->product_id);
 				    		$category=$this->crud_model->get_categories($sell->category);
@@ -60,6 +63,8 @@
 				    		<td><a href="'.base_url('product/'.$product->slug.'/'.$product->id).'" >'. $product->title.'</a></td>
 				    		<td>'.$category->cat_name.'</td>
 				    		<td>Rs '.$product->price.'</td>
+				    		</td>
+				    		<td>Qty '.$sell->quantity.'</td>
 				    		<td>Off '.($sell->offer*100).'%</td>
 				    		</tr>
 				    		';

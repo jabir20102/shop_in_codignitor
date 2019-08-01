@@ -29,7 +29,7 @@
 			  		$config = array(
 			  			'base_url' => base_url('user/wishlist'),
 			  			'total_rows' => count($wishlists),
-			  			'per_page' => 3
+			  			'per_page' => 5
 			  		);
 
 			  		$this->pagination->initialize($config);

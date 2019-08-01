@@ -14,7 +14,9 @@
     
 </head>
 <body>
-	
+	<?php
+// echo 'Current PHP version: ' . phpversion();
+?>
 	<?php 
 		include 'header.php';
 		include 'main/'.$page_name.'.php'; 

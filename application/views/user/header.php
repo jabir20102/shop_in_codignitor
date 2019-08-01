@@ -6,7 +6,7 @@
             </div>
 
             <ul class="list-unstyled components">
-                <p>Admin Panel</p>
+                <p>User Panel</p>
                 <li class="<?php if($active == 'dashboard'){echo 'active';} ?>">
                     <a href="<?php echo base_url('user/dashboard'); ?>">Dashboard</a>
                 </li>

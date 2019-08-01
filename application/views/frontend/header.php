@@ -107,7 +107,7 @@
                                      
                               <li class="nav-item <?php if ($active=='about'){echo 'active';} ?>">
                                         <a class="nav-link" href="<?php echo base_url('about'); ?>">
-                                            About
+                                            About Us
                                         </a>
                                     </li> 
                                     <li class="nav-item <?php if ($active=='contactUs'){echo 'active';} ?>">
