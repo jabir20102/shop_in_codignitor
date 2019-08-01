@@ -839,8 +839,8 @@ public function viewUser($id){
 		         'protocol'  => 'smtp',
 		         'smtp_host' => 'smtp.googlemail.com',
 		         'smtp_port' => 465,
-		         'smtp_user' => 'mjabir42@gmail.com', 
-		         'smtp_pass' => '$jabirkhan11', 
+		         'smtp_user' => '', //  your gmail email
+		         'smtp_pass' => '', //  your gmail password 
 		         'mailtype'  => 'html',
 		         'charset'  => 'iso-8859-1',
 		         'smtp_crypto'   => 'ssl',

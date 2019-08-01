@@ -233,8 +233,8 @@ class Home extends CI_Controller{
 		         'protocol'  => 'smtp',
 		         'smtp_host' => 'smtp.googlemail.com',
 		         'smtp_port' => 465,
-		         'smtp_user' => 'mjabir42@gmail.com', 
-		         'smtp_pass' => '$jabirkhan11', 
+		         'smtp_user' => '', // your gmail username and pass
+		         'smtp_pass' => '', 
 		         'mailtype'  => 'html',
 		         'charset'  => 'iso-8859-1',
 		         'smtp_crypto'   => 'ssl',
