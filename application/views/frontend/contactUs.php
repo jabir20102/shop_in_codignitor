@@ -1,4 +1,10 @@
-
+<!-- Start Header -->
+<div class="fables-header fables-after-overlay">
+    <div class="container"> 
+         <h2 class="fables-page-title fables-second-border-color">Contact Us</h2>
+    </div>
+</div>  
+<!-- /End Header -->
 
      
 <!-- Start Breadcrumbs -->
@@ -32,7 +38,7 @@
                         <div class="col-12 col-sm-6 col-md-4 text-center mb-5 mb-md-0 wow fadeInDown" data-wow-delay=".8s">
                             <span class="fables-iconphone fa-3x fables-main-text-color fables-second-hover-color"></span>
                             <h2 class="font-16 semi-font fables-main-text-color my-3">Mail & Phone number</h2>
-                            <p class="font-14 fables-forth-text-color">adminsupport@website.com</p>
+                            <p class="font-14 fables-forth-text-color">mjabir@gmail.com</p>
                             <p class="font-14 fables-forth-text-color">+333 111 111 000</p>
 
                         </div>

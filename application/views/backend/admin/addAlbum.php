@@ -31,9 +31,13 @@
 
 		    <div class="form-group">
 			    <label for="tags-input">Tags</label>
-			    <input type="text" class="form-control" id="tags-input" name="tags" placeholder="Enter Specific Tags" required>
-			    <small class="form-text text-muted"><strong>Note:-</strong> It is recommended to enter at least 5 keywords</small>
+			    <br>
+			    <div class="tags-input" data-name="tags-input">
+                </div>
+			    <span class="form-text text-muted"><strong>Note:-</strong> It is recommended to enter at least 5 keywords</span>
 		    </div>
+
+		    
 
 		    <div class="form-group">
 			    <label for="categories">Category</label>

@@ -112,7 +112,7 @@ class CRUD_Model extends CI_Model{
 			'price' => $this->input->post('price'),
 			'category' => $this->input->post('cat_id'),
 			'sub_category' => $this->input->post('sub_cat_id'),
-			'tags' => $this->input->post('tags'),
+			'tags' => $this->input->post('tags-input'),
 			'date_added' => date('Y-m-d')
 		);
 
@@ -123,7 +123,15 @@ class CRUD_Model extends CI_Model{
 	}
 
 	// GETTING ALL TUTORIALS OR BY TUTORIAL ID  
-	public function get_products($prod_id = '', $order_by = '', $limit = '', $offset = ''){
+	public function get_products($prod_id = '', $order_by = '', $limit = '', $offset = '',$keywords=''){
+		if($keywords!==''){
+			$query = "SELECT * FROM product where ";
+			$query .= " title like  '%$keywords%' ";
+			$query .= "order by visits desc limit 8 ";
+			 
+			 return $this->db->query($query)->result();
+
+		}
 		if($prod_id !== ''){
 			// getting specific tutorial if tutorial id is passed in parameter
 			$query = $this->db->get_where('product', array('id' => $prod_id));
@@ -361,6 +369,19 @@ public function add_offer($product_id,$percent){
 
 	//   load comments using scrolling
 	public function fetch_comments($limit, $start,$product_id)
+ {
+  $this->db->select("*");
+  $this->db->from("comments");
+  $this->db->order_by("id", "DESC");
+  $this->db->where("product_id", $product_id);
+  $this->db->limit($limit, $start);
+  $query = $this->db->get();
+  return $query;
+
+							  
+ }
+ //   load messages using 
+	public function fetch_messages($student_id)
  {
   $this->db->select("*");
   $this->db->from("comments");

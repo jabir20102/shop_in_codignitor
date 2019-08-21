@@ -6,6 +6,7 @@ class Home extends CI_Controller{
 	public function __construct(){
 		parent::__construct();	
 
+        $this->db->query("SET sql_mode = '' ");
 		$this->crud_model->delete_expire_offers();
 	}
 
@@ -45,6 +46,33 @@ class Home extends CI_Controller{
   }
   echo $output;
  }
+ //  for messages
+ public function fetch_messages()
+ {
+  $output = '';
+  $data = $this->user_model->get_messages($this->input->post('student_id'));
+  echo $this->input->post('student_id');
+  if($data->num_rows() > 0)
+  {
+   foreach($data->result() as $comment)
+   {
+    $output .= '
+    <div class="fables-comments">
+      <p>
+          <span class="fables-fifth-text-color font-14">Posted By</span>
+          <a href="" class="fables-forth-text-color fables-second-hover-color font-15 bold-font ml-1">'. $comment->_to.'</a>
+          <span class="fables-forth-text-color float-right font-14">'.$comment->time.'</span>
+      </p>
+      <p class="font-14 fables-fifth-text-color">
+         '.$comment->msg.' 
+      </p>
+  </div>
+  <hr>
+    ';
+   }
+  }
+  echo $output;
+ }
 
 	
 
@@ -52,12 +80,17 @@ class Home extends CI_Controller{
 	public function product($slug = '', $id = -1){
 
 		if(empty($slug) || is_numeric($slug)){
-			show_404();
+			// show_404();
+			 $this->page_not_found();
+			 return;
 		}
 
 		   $product = $this->crud_model->get_products($id);
 		   if($product==null){
-		   	show_404();
+		   	// show_404();
+		    	$this->page_not_found();
+		   	return;
+
 		   }
 			//if student view the tutorial details then view is counted
 			$count = $product->visits + 1;
@@ -225,6 +258,7 @@ class Home extends CI_Controller{
 	}
 	// contact us
 	public function contact(){
+		
 			 $name=$this->input->post('name');
 			 $email=$this->input->post('email');
 			 $subject=$this->input->post('subject');
@@ -233,8 +267,8 @@ class Home extends CI_Controller{
 		         'protocol'  => 'smtp',
 		         'smtp_host' => 'smtp.googlemail.com',
 		         'smtp_port' => 465,
-		         'smtp_user' => '', // your gmail username and pass
-		         'smtp_pass' => '', 
+		         'smtp_user' => 'mjabir42@gmail.com', 
+		         'smtp_pass' => 'yourpass', 
 		         'mailtype'  => 'html',
 		         'charset'  => 'iso-8859-1',
 		         'smtp_crypto'   => 'ssl',
@@ -248,18 +282,38 @@ class Home extends CI_Controller{
 			    $this->email->subject($subject);
 			    $this->email->message($msg);
 
-			  
 			    
         if($this->email->send()) {
 			    $this->session->set_flashdata('error', 'Thank you for your suggestion....');
 				$this->session->set_flashdata('class', 'alert-success alert mt-3');
 				redirect(base_url('contactUs'),'refresh');
         }else{
-				$this->session->set_flashdata('error', 'An error accured while sending your suggestion...');
-				$this->session->set_flashdata('class', 'alert-danger alert mt-3');
-				redirect(base_url('contactUs'),'refresh');
+        	show_error($this->email->print_debugger());
+				// $this->session->set_flashdata('error', 'An error accured while sending your suggestion...');
+				// $this->session->set_flashdata('class', 'alert-danger alert mt-3');
+				// redirect(base_url('contactUs'),'refresh');
         }
 	}
+	// TO  search 
+	public function search(){
+
+		if($_GET['q']!==''){
+		$products= $this->crud_model->get_products('','','','',$_GET['q']);
+
+		$data['page_title'] = 'Search Result';
+		$data['page_name'] = 'search_page';
+		$data['products'] = $products;
+		$data['keywords']=$_GET['q'];
+		$data['active'] = 'search';
+		
+		$this->load->view('frontend/index', $data, FALSE);
+	}else{
+				$this->session->set_flashdata('error', 'Enter keywords...');
+				$this->session->set_flashdata('class', 'alert-danger alert mt-3');
+				redirect(base_url('/'),'refresh');
+	}
+	}
+
 // TO SHOW about us page
 	public function about(){
 
@@ -362,10 +416,29 @@ class Home extends CI_Controller{
  function view_cart()
  {
   $this->load->library("cart");
+  $cart_header=' <a href="#_" class="fables-third-text-color dropdown-toggle right px-3 px-md-2 px-lg-4 fables-second-hover-color top-header-link max-line-height position-relative" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                       <span class="fables-iconcart-icon font-20"></span>
+                                       <span class="fables-cart-number fables-second-background-color text-center">
+                                        '.count($this->cart->contents()).'</span>
+                                    </a>
+ 
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                     <div class="p-3 cart-block"> 
+                                       
+  <p class="fables-second-text-color semi-font mb-4 font-17">('.count($this->cart->contents()).') Items in my cart</p>';
+  $cart_footer=' </div>
+  <span class="font-16 semi-font fables-main-text-color">TOTAL</span>
+                                             <span class="font-14 semi-font fables-second-text-color float-right">Rs '.$this->cart->total().'</span>
+                                             <hr>
+                                             <div class="text-center">
+                                                 <button type="button" id="clear_cart" class="fables-second-background-color fables-btn-rounded  text-center white-color py-2 px-3 font-14 bg-hover-transparent border fables-second-border-color fables-second-hover-color">Clear Cart</button>
+                                                <a href="'.base_url('Home/checkout').'" class="fables-second-text-color border fables-second-border-color fables-btn-rounded text-center white-color p-2 px-4 font-14 fables-second-hover-background-color">Checkout</a>
+                                             </div>
+
+                                              </div>
+                                  </div>';
   $output = '';
-  $output .= '
-  <p class="fables-second-text-color semi-font mb-4 font-17">('.count($this->cart->contents()).') Items in my cart</p>
-  ';
+  $output .= $cart_header;
   $count = 0;
   foreach($this->cart->contents() as $items)
   {
@@ -392,26 +465,24 @@ class Home extends CI_Controller{
                                              </div>
    ';
   }
-  $output .= '
-  
-
-  </div>
-  <span class="font-16 semi-font fables-main-text-color">TOTAL</span>
-                                             <span class="font-14 semi-font fables-second-text-color float-right">Rs '.$this->cart->total().'</span>
-                                             <hr>
-                                             <div class="text-center">
-                                                 <button type="button" id="clear_cart" class="fables-second-background-color fables-btn-rounded  text-center white-color py-2 px-3 font-14 bg-hover-transparent border fables-second-border-color fables-second-hover-color">Clear Cart</button>
-                                                <a href="'.base_url('Home/checkout').'" class="fables-second-text-color border fables-second-border-color fables-btn-rounded text-center white-color p-2 px-4 font-14 fables-second-hover-background-color">Checkout</a>
-                                             </div>
-  ';
+  $output .= $cart_footer;
 
   if($count == 0)
   {
-   $output = '<p align="center">Cart is Empty</p>';
+   $output =$cart_header. '<p align="left">Cart is Empty</p>';
   }
   return $output;
  }
 	
+	//  page_not_found
+ public function page_not_found(){
+ 	$data['page_title'] = 'Page Not Found';
+		$data['page_name'] = 'page404';
+		// $data['tutorials'] = $tutorials;
+		$data['active'] = '';
+		
+		$this->load->view('frontend/index', $data, FALSE);
+ }
 
 	// THIS WILL ONLY LOGOUT THE TEACHER OR STUDENT
 	public function logout(){

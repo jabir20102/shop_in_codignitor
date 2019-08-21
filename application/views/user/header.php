@@ -21,6 +21,9 @@
                 <li class="<?php if($active == 'profile'){echo 'active';} ?>">
                     <a href="<?php echo base_url('user/profile'); ?>">Profile</a>
                 </li>
+                <li class="<?php if($active == 'chat'){echo 'active';} ?>">
+                    <a href="<?php echo base_url('user/chat'); ?>">Chat with Admin</a>
+                </li>
                 <li>
                     <a href="<?php echo base_url('user/logout'); ?>">Log Out</a>
                 </li>
@@ -58,15 +61,20 @@
                             <img src="<?php echo $image_src; ?>" class="rounded-circle" width=45 height=45>
 
                             <li class="nav-item my-auto ml-2">
-                                <?php echo $this->session->userdata('admin_name'); ?>
+                                <?php echo $this->session->userdata('student_name'); ?>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
+<?php
+if($this->session->flashdata('error')){
+?>
+<div  class="<?php echo $this->session->flashdata('class');?>" role="alert">
+     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
-            <div  class="<?php echo $this->session->flashdata('class');?>" role="alert">
-                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
-                <strong><?php print_r($this->session->flashdata('error')); ?></strong>
-            </div>
+    <strong><?php print_r($this->session->flashdata('error')); ?></strong>
+</div>
+<?php
+}
+?>

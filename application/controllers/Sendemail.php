@@ -58,7 +58,7 @@ class Sendemail extends CI_Controller {
          'smtp_host' => 'smtpout.secureserver.net',
          'smtp_port' => 80,
          'smtp_user' => 'mjabir42@gmail.com', 
-         'smtp_pass' => '$jabirkhan11', 
+         'smtp_pass' => 'password', 
          'mailtype'  => 'html',
          'charset'  => 'iso-8859-1',
          'wordwrap'  => TRUE

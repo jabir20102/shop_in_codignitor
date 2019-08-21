@@ -2,10 +2,10 @@
 <div class="search-section">
     <a class="close-search" href="#"></a>
     <div class="d-flex justify-content-center align-items-center h-100">
-        <form method="post" action="#" class="w-50">
+        <form method="get" action="<?php echo base_url('search'); ?>" class="w-50">
             <div class="row">
                 <div class="col-10">
-                    <input type="search" value="" class="form-control palce bg-transparent border-0 search-input" placeholder="Search Here ..." /> 
+                    <input name="q" type="search" value="" class="form-control palce bg-transparent border-0 search-input" placeholder="Search Here ..." /> 
                 </div>
                 <div class="col-2 mt-3">
                      <button type="submit" class="btn bg-transparent text-white"> <i class="fas fa-search"></i> </button>
@@ -114,8 +114,8 @@
                                         <a class="nav-link" href="<?php echo base_url('contactUs'); ?>">
                                             Contact Us
                                         </a>
-                                    </li>     
-
+                                    </li>    
+                                    
                                    
                                 </ul> 
 
@@ -125,21 +125,9 @@
                    <div class="col-12 col-md-2 col-lg-3 pr-md-0 icons-header-mobile">
                        
                     <div class="fables-header-icons">
-                        <div class="dropdown"> 
-                                  <a href="#_" class="fables-third-text-color dropdown-toggle right px-3 px-md-2 px-lg-4 fables-second-hover-color top-header-link max-line-height position-relative" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                       <span class="fables-iconcart-icon font-20"></span>
-                                       <span class="fables-cart-number fables-second-background-color text-center">
-                                        <?php echo count($this->cart->contents());?></span>
-                                    </a>
- 
-                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                     <div class="p-3 cart-block" id="cart_details">
-                                    <p align="center">Cart is Empty</p>
-                                             
-                                             
-                                             
-                                        </div>
-                                  </div>
+                        <div class="dropdown" id="cart_details"> 
+                                
+
                          </div>
                          <a href="#" class="open-search fables-third-text-color right  top-header-link px-3 px-md-2 px-lg-4 fables-second-hover-color border-0 max-line-height">
                             <span class="fables-iconsearch-icon"></span>

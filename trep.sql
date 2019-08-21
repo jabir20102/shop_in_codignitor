@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 01, 2019 at 04:43 PM
+-- Generation Time: Aug 21, 2019 at 01:56 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -66,6 +66,53 @@ INSERT INTO `categories` (`id`, `cat_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `chat`
+--
+
+CREATE TABLE `chat` (
+  `id` int(11) NOT NULL,
+  `msg` varchar(255) DEFAULT NULL,
+  `_from` int(11) NOT NULL,
+  `_to` int(11) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `chat`
+--
+
+INSERT INTO `chat` (`id`, `msg`, `_from`, `_to`, `time`) VALUES
+(1, 'this is msg by user 1', 6, 0, '2019-08-16 10:56:52'),
+(2, 'this is reply', 0, 6, '2019-08-16 10:57:13');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chat_message`
+--
+
+CREATE TABLE `chat_message` (
+  `chat_message_id` int(11) NOT NULL,
+  `to_user_id` int(11) NOT NULL,
+  `from_user_id` int(11) NOT NULL,
+  `chat_message` text NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `chat_message`
+--
+
+INSERT INTO `chat_message` (`chat_message_id`, `to_user_id`, `from_user_id`, `chat_message`, `timestamp`, `status`) VALUES
+(91, 0, 6, 'hello this is jabir khan', '2019-08-21 10:17:53', -1),
+(92, 6, 0, 'reply to jabir khan', '2019-08-21 10:18:10', -1),
+(99, 0, 1, 'hello', '2019-08-21 11:52:34', -1),
+(100, 1, 0, 'hi', '2019-08-21 11:52:51', -1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `comments`
 --
 
@@ -84,7 +131,11 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `product_id`, `name`, `email`, `comment`, `added_date`, `isApproved`) VALUES
-(1, 12, 'Mobiles', 'mjabir42@gmail.com', 'this is comments', '2019-07-29', 1);
+(1, 12, 'Mobiles', 'mjabir42@gmail.com', 'this is comments', '2019-07-29', 1),
+(3, 12, 'dedd', 'edde', 'dedece', '2019-08-13', 1),
+(4, 12, 'dedd', 'edde', 'dedece', '2019-08-13', 1),
+(5, 12, 'dedd', 'edde', 'dedece', '2019-08-13', 1),
+(6, 12, 'dedd', 'edde', 'dedece', '2019-08-13', 1);
 
 -- --------------------------------------------------------
 
@@ -106,7 +157,60 @@ INSERT INTO `images` (`id`, `product_id`, `url`) VALUES
 (32, 12, 'uploads/products/images/indexk.jpg'),
 (33, 12, 'uploads/products/images/shirts.jpg'),
 (34, 13, 'uploads/products/images/images.jpg'),
-(35, 13, 'uploads/products/images/index.jpg');
+(38, 13, 'uploads/products/images/index.jpg'),
+(40, 15, 'uploads/products/images/index2.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `login`
+--
+
+CREATE TABLE `login` (
+  `user_id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `login`
+--
+
+INSERT INTO `login` (`user_id`, `username`, `password`) VALUES
+(1, 'johnsmith', '$2y$10$4REfvTZpxLgkAR/lKG9QiOkSdahOYIR3MeoGJAyiWmRkEFfjH3396'),
+(2, 'peterParker', '$2y$10$4REfvTZpxLgkAR/lKG9QiOkSdahOYIR3MeoGJAyiWmRkEFfjH3396'),
+(3, 'davidMoore', '$2y$10$4REfvTZpxLgkAR/lKG9QiOkSdahOYIR3MeoGJAyiWmRkEFfjH3396');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `login_details`
+--
+
+CREATE TABLE `login_details` (
+  `login_details_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `last_activity` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_type` enum('no','yes') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `login_details`
+--
+
+INSERT INTO `login_details` (`login_details_id`, `user_id`, `last_activity`, `is_type`) VALUES
+(3, 6, '2019-08-17 06:56:33', 'no'),
+(4, 6, '2019-08-17 07:49:54', 'no'),
+(5, 6, '2019-08-17 06:00:14', 'no'),
+(6, 6, '2019-08-18 21:08:06', 'no'),
+(7, 6, '2019-08-20 02:36:34', 'no'),
+(8, 6, '2019-08-20 06:00:28', 'no'),
+(9, 6, '2019-08-21 06:57:31', 'no'),
+(10, 1, '2019-08-21 07:12:49', 'no'),
+(11, 6, '2019-08-21 07:18:17', 'no'),
+(12, 1, '2019-08-20 20:29:48', 'no'),
+(13, 6, '2019-08-20 20:35:54', 'no'),
+(14, 1, '2019-08-20 20:56:48', 'no');
 
 -- --------------------------------------------------------
 
@@ -120,14 +224,6 @@ CREATE TABLE `offer` (
   `percent` varchar(5) NOT NULL,
   `added_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `offer`
---
-
-INSERT INTO `offer` (`id`, `product_id`, `percent`, `added_date`) VALUES
-(121, 12, '0.1', '2019-07-30'),
-(122, 13, '0.2', '2019-08-01');
 
 -- --------------------------------------------------------
 
@@ -177,8 +273,9 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `title`, `slug`, `description`, `details`, `price`, `category`, `sub_category`, `tags`, `visits`, `date_added`) VALUES
-(12, 'T shirts new designs', 't-shirts-new-designs', 'description about t shirt..... jabirdescription about t shirt..... jabirdescription about t shirt..... jabirdescription about t shirt..... jabir', 'description about t shirt..... jabirdescription about t shirt..... jabirdescription about t shirt..... jabirdescription about t shirt..... jabir', 900, 7, 4, 'tag1', 29, '2019-07-29'),
-(13, 'New Jeans pants for men', 'new-jeans-pants-for-men', '\r\n    Add new Product\r\n    Categories\r\n    Students\r\n    All Tutorials\r\n    All Comments\r\n    Profile\r\n    Log Out\r\n\r\n    Jabir Khan\r\n\r\nCreate New Product\r\n', '\r\n    Add new Product\r\n    Categories\r\n    Students\r\n    All Tutorials\r\n    All Comments\r\n    Profile\r\n    Log Out\r\n\r\n    Jabir Khan\r\n\r\nCreate New Product\r\n', 1300, 7, 5, 'tag', 9, '2019-07-29');
+(12, 'T shirts new designs', 't-shirts-new-designs', 'description about t shirt..... jabirdescription about t shirt..... jabirdescription about t shirt..... jabirdescription about t shirt..... jabir', 'description about t shirt..... jabirdescription about t shirt..... jabirdescription about t shirt..... jabirdescription about t shirt..... jabir', 900, 7, 4, 'tag1', 53, '2019-07-29'),
+(13, 'New Jeans pants for men', 'new-jeans-pants-for-men', '\r\n    Add new Product\r\n    Categories\r\n    Students\r\n    All Tutorials\r\n    All Comments\r\n    Profile\r\n    Log Out\r\n\r\n    Jabir Khan\r\n\r\nCreate New Product\r\n', '\r\n    Add new Product\r\n    Categories\r\n    Students\r\n    All Tutorials\r\n    All Comments\r\n    Profile\r\n    Log Out\r\n\r\n    Jabir Khan\r\n\r\nCreate New Product\r\n', 1300, 7, 5, 'tag', 55, '2019-07-29'),
+(15, 'Nayak full Hindi dubbed movie.. ramcharan super hero', 'nayak-full-hindi-dubbed-movie-ramcharan-super-hero', 'tags-input', 'tags-input', 1234, 6, 1, 'css,java,khan', 2, '2019-08-08');
 
 -- --------------------------------------------------------
 
@@ -261,9 +358,8 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`id`, `name`, `email`, `password`, `image_url`, `address`, `city`, `country`, `zip`, `phone`, `preferences`, `date_added`) VALUES
-(1, 'Rosita Janka Student', 'sheraz5006@gmail.com', 'abc123', 'uploads/frontend/user_images/students/index-video.jpg', '', '', '', 0, '', '{\r\n				\"categories\": [2,1],\r\n				\"skill_level\": \"all\"\r\n			}', '2019-03-23'),
-(6, 'khan', 'mjabir42@gmail.com', 'khan1234', '', '', '', '', 0, '', '', '2019-07-28'),
-(8, 'Jabir khan', 'jabir20102@yahoo.com', 'jabirkhan12', '', 'this is address of jabir khan updated', 'Attock', 'Pakistan', 42420, '3155395245', '', '2019-07-28');
+(1, 'Rosita Janka Student', 'sheraz5006@gmail.com', 'abc123', 'uploads/frontend/user_images/students/index-video.jpg', '', '', '', 0, '', '{\r\n        \"categories\": [2,1],\r\n        \"skill_level\": \"all\"\r\n      }', '2019-03-23'),
+(6, 'Jabir khan', 'mjabir42@gmail.com', 'khan1234', 'uploads/frontend/user_images/students/khan.jpg', 'adress', 'attock', 'Pak', 420, '0315', '', '2019-07-28');
 
 -- --------------------------------------------------------
 
@@ -348,14 +444,6 @@ CREATE TABLE `wishlist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `wishlist`
---
-
-INSERT INTO `wishlist` (`id`, `product_id`, `student_id`) VALUES
-(10, 12, 8),
-(11, 13, 8);
-
---
 -- Indexes for dumped tables
 --
 
@@ -374,6 +462,18 @@ ALTER TABLE `categories`
   ADD UNIQUE KEY `unique cat name` (`cat_name`);
 
 --
+-- Indexes for table `chat`
+--
+ALTER TABLE `chat`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `chat_message`
+--
+ALTER TABLE `chat_message`
+  ADD PRIMARY KEY (`chat_message_id`);
+
+--
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
@@ -386,6 +486,18 @@ ALTER TABLE `comments`
 ALTER TABLE `images`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `login`
+--
+ALTER TABLE `login`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- Indexes for table `login_details`
+--
+ALTER TABLE `login_details`
+  ADD PRIMARY KEY (`login_details_id`);
 
 --
 -- Indexes for table `offer`
@@ -487,22 +599,46 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `chat`
+--
+ALTER TABLE `chat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `chat_message`
+--
+ALTER TABLE `chat_message`
+  MODIFY `chat_message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+
+--
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
+--
+-- AUTO_INCREMENT for table `login`
+--
+ALTER TABLE `login`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `login_details`
+--
+ALTER TABLE `login_details`
+  MODIFY `login_details_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `offer`
 --
 ALTER TABLE `offer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -514,7 +650,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `ratings`

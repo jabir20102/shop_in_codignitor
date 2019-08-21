@@ -35,14 +35,14 @@
                   <div class="form-group"> 
                       <div class="input-icon">
                           <span class="fables-iconemail fables-input-icon mt-2 font-13"></span>
-                          <input type="email" name="email" class="form-control rounded-0 py-3 pl-5 font-13 sign-register-input"  placeholder="Email"> 
+                          <input type="email" name="email" class="form-control rounded-0 py-3 pl-5 font-13 sign-register-input"  placeholder="Email" required> 
                       </div>
                     
                   </div>
                   <div class="form-group"> 
                       <div class="input-icon">
                          <span class="fables-iconpassword fables-input-icon font-19 mt-1"></span>
-                         <input type="password" name="pass" class="form-control rounded-0 py-3 pl-5 font-13 sign-register-input" placeholder="Password">
+                         <input type="password" name="pass" class="form-control rounded-0 py-3 pl-5 font-13 sign-register-input" placeholder="Password" required>
                       </div>
                     
                   </div> 

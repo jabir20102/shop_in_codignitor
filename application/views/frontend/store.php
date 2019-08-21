@@ -1,9 +1,29 @@
 <!-- Start Header -->
-<div class="fables-header fables-after-overlay">
+<!-- <div class="fables-header fables-after-overlay">
     <div class="container"> 
          <h2 class="fables-page-title fables-second-border-color"><?php echo $category_name; ?></h2>
     </div>
-</div>  
+</div>   -->
+<!--Video Section-->
+    <section class="content-section video-section fables-after-overlay">
+      <div class="pattern-overlay">
+      <a id="bgndVideo" class="player" data-property="{videoURL:'https://www.youtube.com/watch?v=t32ITT25cPY',containment:'.video-section', quality:'large',mute: 'true' ,autoPlay:true, opacity:1}">bg</a>
+        <div class="container position-relative z-index">
+           <div class="fables-video-caption text-center wow zoomIn" data-wow-delay="1s" data-wow-duration="2s">
+              <h1 class="white-color font-weight-bold mt-6">We are a full service digital product agency </h1>  
+              <p class="fables-fifth-text-color mt-3 mb-4 font-18">
+                  We are a full service digital product agency
+              </p>
+              <a data-fancybox href="https://www.youtube.com/watch?v=meBbDqAXago">
+                 <span class="fables-iconplay fables-second-text-color fa-4x wow bounce"></span>
+              </a> 
+              
+          </div>
+        </div>
+      </div>
+    </section>
+<!--Video Section Ends Here--> 
+
 <!--Start Breadcrumbs -->
 <div class="fables-light-gary-background">
     <div class="container"> 
@@ -22,32 +42,36 @@
      <div class="row my-4 my-md-5">
            <div class="col-12 col-md-4 col-lg-3">
                <div class="fables-store-search mb-4">
-                   <form> 
+                   <form method="get" action="<?php echo base_url('search'); ?>"> 
                          <div class="input-icon">
                              <span class="fables-iconsearch-icon fables-input-icon"></span>
-                             <input type="text" class="form-control rounded-0 form-control rounded-0 font-14 fables-store-input pl-5 py-2"  placeholder="Search Product">
+                             <input name="q" type="text" class="form-control rounded-0 form-control rounded-0 font-14 fables-store-input pl-5 py-2"  placeholder="Search Product">
                          </div>
  
                   </form>
                </div>
                <form action="<?php  echo base_url('sub_categories'); ?>" method="get"> 
                <div class="rage-slider">
-                    <h2 class="font-16 semi-font fables-forth-text-color fables-light-gary-background  p-3 mb-4">Filter by price</h2>
+                    <h2 class="font-16 semi-font fables-forth-text-color fables-light-gary-background  p-3 mb-4">Filter by price </h2>
                     
                     <?php
                     if(isset($_GET['min-price']) && isset($_GET['max-price'])){
                     $min=$_GET['min-price'];
                     $max=$_GET['max-price'];
-                  }else{$min=0;$max=10000;}
+                  }else{$min=0;$max=1000;}
                     ?>
-                    
-                         <div class="range-slider fables-forth-text-color" id="facet-price-range-slider" data-options='{"output":{"prefix":""},"maxSymbol":"+"}'>
-                             <input name="min-price" value="<?php echo $min;  ?>" min="0" max="10000" step="100" type="range">
-                             <input name="max-price" value="<?php echo $max;  ?>" min="0" max="10000" step="100" type="range">
-                         </div> 
+            <!-- <div  id="slider-range"></div>
+             <input id="min-price" name="min-price" type="hidden">
+             <input id="max-price" name="max-price" type="hidden">
+                      
+              <input type="text" id="amount" readonly style="border:0; color:grey;margin: 5px auto; font-weight:bold;"> -->
+              
+                  <div class="range-slider fables-forth-text-color" id="facet-price-range-slider" data-options='{"output":{"prefix":""},"maxSymbol":"+"}'>
+                     <input name="min-price" value="<?php echo $min;  ?>" min="0" max="1000" step="10" type="range">
+                     <input name="max-price" value="<?php echo $max;  ?>" min="0" max="1000" step="10" type="range">
+                 </div>  
                         
                </div>
-               <div id="slider"></div>
                 <input type="hidden"  value="<?php echo $category;  ?>" name="category">
                <h2 class="font-16 semi-font fables-forth-text-color fables-light-gary-background  p-3 mb-4">Sub Categories</h2>
                <ul class="nav fables-forth-text-color fables-forth-before fables-store-left-list">
@@ -82,7 +106,7 @@
 
                ?> 
                <div class="row mb-3">
-                   <div class="col-4 pr-0">
+                   <div class="col-4 pr-0  image-container shine-effect">
                        <a href="#"><img src="<?php if(count($images)>0) echo base_url($images[0]->url); ?>" alt="" class="w-100"></a>
                    </div>
                    <div class="col-8">
@@ -135,7 +159,7 @@
                    <div class=" col-sm-6 col-md-4 col-lg-3 fables-product-block">
                            <div class="card rounded-0 mb-4">
                                <div class="row"> 
-                                   <div class="fables-product-img col-12">
+                                   <div class="fables-product-img  image-container shine-effect col-12">
                                     <?php  if($isOffer!=null){
                                           echo '<span  class="sale fables-second-background-color text-center">
                                         '.($isOffer->percent*100).'% Off</span>';

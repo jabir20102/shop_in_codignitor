@@ -1,4 +1,10 @@
-
+<!-- Start Header -->
+<div class="fables-header fables-after-overlay">
+    <div class="container"> 
+         <h2 class="fables-page-title fables-second-border-color">About Us</h2>
+    </div>
+</div>  
+<!-- /End Header -->
      
 <!-- Start Breadcrumbs -->
 <div class="fables-light-gary-background">
@@ -143,9 +149,9 @@
         <div class="owl-carousel owl-theme" id="fables-testimonial-carousel">
               <div class="row text-center fables-testimonial-carousel-item rounded py-4"> 
                    <div class="col-12 col-md-3">
-                      <img src="assets/custom/images/testimonial-img.png" alt="Fables Template" class="fables-testimonial-carousel-img">  
-                      <h3 class="font-14 semi-font text-white">Billy Richards</h3>
-                      <h3 class="font-14 font-italic text-white mt-2">Chief Manager, Simba Co</h3>
+                      <img src="assets/custom/images/profile.jpg" alt="Fables Template" class="fables-testimonial-carousel-img">  
+                      <h3 class="font-14 semi-font text-white">Jabir Khan</h3>
+                      <h3 class="font-14 font-italic text-white mt-2">Programmer</h3>
                    </div>
                    <div class="col-12 col-md-9 p-0 p-md-2">
                         <div class="fables-testimonial-detail font-15 font-italic text-white p-4 position-relative"> 

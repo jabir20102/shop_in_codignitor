@@ -52,6 +52,40 @@ class User extends CI_Controller{
 			redirect(base_url('user'),'refresh');
 		}
 	}
+	// SHOWS THE user wishlist
+	public function chat(){
+
+		if($this->session->userdata('student_login')){
+			// if admin is logged in loading the dash view
+			$user = $this->user_model->get_students($this->session->userdata('student_email'));
+    if($user->image_url == ''){
+        $image_src = base_url('uploads/backend/user_image/placeholder.png');
+    }
+    else{
+        $image_src = base_url($user->image_url);
+    }
+     $result = $this->user_model->get_admin('sheraz5006@gmail.com');
+    if($result->image_url == ''){
+        $user_src = base_url('uploads/backend/user_image/placeholder.png');
+    }
+    else{
+        $user_src = base_url($result->image_url);
+    }
+
+			$data['id']=$this->session->userdata('student_id');
+
+			$data['user_src']=$user_src;
+			$data['img_src']=$image_src;
+			$data['page_title'] = 'Chat with Admin';
+			$data['page_name'] = 'chat_box';
+			$data['active'] = 'chat';
+
+			$this->load->view('user/index', $data, FALSE);
+		}
+		else{
+			redirect(base_url('user'),'refresh');
+		}
+	}
 	// SHOWS THE orders 
 	public function orders(){
 
@@ -285,9 +319,78 @@ public function profile(){
 		$this->session->unset_userdata('student_email');
 		$this->session->unset_userdata('student_login');
 	}
+	//  chatting user
+	public function fetch_user(){
+		$users=$this->user_model->get_students();
+		$output = '
+		<hr>
+<table class="table table-bordered table-striped">
+<h3 class="">Online Users</h3>
+ <tr>
+  <th><span class="dot"></span></th>
+  <th>Username</th>
+  <th>Action</th>
+ </tr>
+';
+
+foreach($users as $row)
+{
+ $status = '';
+ $current_timestamp = strtotime(date("Y-m-d h:i:s") . '- 10 second');
+ $current_timestamp = date('Y-m-d h:i:s', $current_timestamp);
+ $user_last_activity = $this->user_model->fetch_user_last_activity($row->id);
+ $userTime=1;
+
+ foreach($user_last_activity as $r)
+ {
+ $userTime=   $r->last_activity;
+ }
+ if($userTime > $current_timestamp)
+ {
+  $output .= '
+ <tr>
+
+  <td><span class="dot"></span></td>
+  <td>'.$row->email.'</td>
+
+  <td><button type="button" class="btn btn-info btn-xs start_chat" data-touserid="'.$row->id.'" data-tousername="'.$row->email.'">Start Chat</button></td>
+ </tr>
+
+ ';
+}
+}
+
+$output .= '</table>';
+
+echo $output;
+	}
+
+public function insert_chat(){
+ $result=$this->user_model->minsert_chat();
+}
+
+public function fetch_user_chat_history(){
+	echo  $this->user_model->mfetch_user_chat_history($this->input->post('to'),$this->input->post('from'));
+}
+
+public function clear_chat(){
+	  $effected_rows=$this->user_model->mclear_chat();
+	 if($effected_rows==0) {	     	//  means when no record is deleted ten update status
+	 	$result1=$this->user_model->mclear_chat1();
+	 	}else{
+	 		$elsess="else";// awehe
+	 	}
+}
+public function del_msg(){
+	 $effected_rows=$this->user_model->mdel_msg();
+	if($effected_rows==0) {	     	//  means when no record is deleted ten update status
+	 	$result1=$this->user_model->mdel_msg1();
+	 	}else{
+	 		$elsess="else";// awehe
+	 	}
 }
 
 	
-
+}
 
 ?>

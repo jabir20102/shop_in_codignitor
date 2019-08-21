@@ -77,7 +77,8 @@
               <p class="fables-forth-text-color font-15 my-3">
                   <?php echo $product->description;  ?>
               </p>
-              
+
+
               <div class="row mb-5">
                   <div class="col-5 col-md-3">
                       <span class="fables-fifth-text-color"> COLORS : </span>
@@ -179,7 +180,19 @@
                           <li><a href="#" target="_blank" class="fables-forth-text-color fables-single-link fables-second-hover-color"><i class="fab fa-linkedin fa-fw"></i></a></li>
                       </ul>
                   </div>
-              </div> 
+              </div> <br>
+              <div class="row">
+                <?php
+                $tags=explode (",", $product->tags);
+                foreach ($tags as $tag) {
+                  
+                ?>
+                <div class="col-6 col-sm-4 col-lg-3 fables-forth-background-color white-color" style="margin: 5px"><?php  echo $tag; ?></div>
+
+                <?php
+              }
+              ?>
+              </div>
           </div> 
      </div>
      <div class="row">
@@ -227,7 +240,7 @@
                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 fables-product-block">
                            <div class="card rounded-0 mb-4">
                                <div class="row">
-                                   <div class="fables-product-img col-12">
+                                   <div class="fables-product-img  image-container shine-effect col-12">
                                       <img class="card-img-top rounded-0" src="<?php if(count($images)>0) echo base_url($images[0]->url); ?>" alt="dress fashion">
                                       <div class="fables-img-overlay">                                          
                                           <ul class="nav fables-product-btns">

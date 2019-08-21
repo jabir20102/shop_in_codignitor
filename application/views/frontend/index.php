@@ -10,8 +10,13 @@
     <link rel="shortcut icon" href="<?php echo base_url('assets/custom/images/shortcut.png') ?>">
 
     <title> Store Grid List </title>
-    <style>
-</style>
+  
+
+    
+    <!-- portfolio filter gallery -->
+    <link href="<?php echo base_url('assets/vendor/portfolio-filter-gallery/portfolio-filter-gallery.css')?>" rel="stylesheet">
+    <!-- FANCY BOX -->
+    <link href="<?php echo base_url('assets/vendor/fancybox-master/jquery.fancybox.min.css')?>" rel="stylesheet"> 
     
     <!-- animate.css-->  
     <link href="<?php echo base_url('assets/vendor/animate.css-master/animate.min.css')?>" rel="stylesheet">
@@ -31,7 +36,7 @@
     <!-- FANCY BOX -->
     <link href="<?php echo base_url('assets/vendor/fancybox-master/jquery.fancybox.min.cs')?>" rel="stylesheet"> 
     <!-- RANGE SLIDER -->
-    <link href="<?php echo base_url('assets/vendor/range-slider/range-slider.css')?>" rel="stylesheet">
+     <link href="<?php echo base_url('assets/vendor/range-slider/range-slider.css')?>" rel="stylesheet"> 
     <!-- OWL CAROUSEL  --> 
     <link href="<?php echo base_url('assets/vendor/owlcarousel/owl.carousel.min.css')?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/vendor/owlcarousel/owl.theme.default.min.css')?>" rel="stylesheet">
@@ -50,17 +55,22 @@
         position: relative;padding: inherit;margin: inherit;color: white;
       }
     </style>
-	
+
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
 
 </head>
 
 <body>
+ 
 	<?php
-		$student = $this->session->userdata('student_login');
 
 		include('header.php');
+    // include('slider.php');
 		include $page_name.'.php'; 
 		include 'footer.php';
+    
 	?>
 
 
@@ -69,15 +79,28 @@
 <script src="<?php echo base_url('assets/vendor/popper/popper.min.js')?>"></script>
 <script src="<?php echo base_url('assets/vendor/WOW-master/dist/wow.min.js')?>"></script>
 <script src="<?php echo base_url('assets/vendor/loadscreen/js/ju-loading-screen.js')?>"></script>
-<script src="<?php echo base_url('assets/vendor/range-slider/range-slider.js')?>"></script>
+ <script src="<?php echo base_url('assets/vendor/range-slider/range-slider.js')?>"></script> 
 <script src="<?php echo base_url('assets/vendor/bootstrap/js/bootstrap.min.js')?>"></script>
 <script src="<?php echo base_url('assets/vendor/bootstrap/js/bootstrap-4-navbar.js')?>"></script>
 <script src="<?php echo base_url('assets/vendor/timeline/jquery.timelify.js')?>"></script>
 <script src="<?php echo base_url('assets/vendor/owlcarousel/owl.carousel.min.js')?>"></script> 
 <script src="<?php echo base_url('assets/custom/js/custom.js')?>"></script> 
 
+<script src="<?php echo base_url('assets/vendor/loadscreen/js/ju-loading-screen.js')?>"></script>
+<script src="<?php echo base_url('assets/vendor/portfolio-filter-gallery/jquery.isotope.min.js')?>"></script>
+<script src="<?php echo base_url('assets/vendor/portfolio-filter-gallery/portfolio-filter-gallery.js')?>"></script>
+<script src="<?php echo base_url('assets/vendor/owlcarousel/owl.carousel.min.js')?>"></script>  
+<script src="<?php echo base_url('assets/vendor/WOW-master/dist/wow.min.js')?>"></script>
+<script src="<?php echo base_url('assets/vendor/timeline/jquery.timelify.js')?>"></script>
+<script src="<?php echo base_url('assets/vendor/fancybox-master/jquery.fancybox.min.js')?>"></script>
+<script src="<?php echo base_url('assets/vendor/timeline/timeline.js')?>"></script>
+<script src="<?php echo base_url('assets/vendor/timeline/modernizr.js')?>"></script> 
+
+ 
+
+
 <script type="text/javascript">
-    <!-- var myVar = setInterval(timer, 1000); -->
+    // setInterval(timer, 1000); 
     function timer(){
          var d = new Date();
   var day = d.getDay();
@@ -245,6 +268,7 @@
 
     });
 </script>
+ 
 
 </body>
 </html>

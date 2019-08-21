@@ -241,3 +241,8 @@ if(rangeSlider.length > 0) {
     }
   });
 }
+
+
+
+ 
+

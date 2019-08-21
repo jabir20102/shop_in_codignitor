@@ -9,6 +9,7 @@
     }
 ?>
 
+<a href="<?php echo $image_src; ?>" download>Download image</a>
 <div class="bg-light rounded">
 	<div class="border-bottom">
 		<div class="container-fluid">
@@ -17,7 +18,6 @@
 			</div>
 		</div>
 	</div>
-
 	<div class="container">
 		<div class="row ">
 			<div class="col-md-3 text-center py-3">

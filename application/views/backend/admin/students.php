@@ -1,11 +1,8 @@
 <div class="container">
 	<div class="row">
 		<div class="col mx-auto bg-light rounded">
-			<div class="border-bottom">
-				<div class="container-fluid">
-					<h3 class="pt-4 pb-3">Students</h3>
-				</div>
-			</div>
+					<h3>Students</h3>
+			
 			
 			<div class="table my-4">
 
@@ -15,6 +12,7 @@
 				      <th>Image</th>
 				      <th>Student Name</th>
 				      <th>Email</th>
+				      <th>Status</th>
 				      <th>Actions</th>
 				    </tr>
 				  </thead>
@@ -57,6 +55,7 @@
 				  			echo '<td><img class="rounded-circle" src="'.$image_src.'" width="45"></td>';
 				  			echo '<td><a href="'.base_url('admin/viewUser/'.$student->id).'" >'.$student->name.'</td>';
 				  			echo '<td>'.$student->email.'</td>';
+				  			echo '<td><button type="button" class="btn btn-info btn-xs start_chat" data-touserid="'.$student->id.'" data-tousername="'.$student->name.'">Start Chat</button></td>';
 				  			echo '<td><form action="'.base_url('admin/students/delete').'" method="post"><input type="hidden" name="student-id" value="'.$student->id.'"><button type="submit" class="btn btn-danger">Delete</button></form></td>';
 				  			echo '</tr>';
 				  		}
@@ -71,7 +70,25 @@
 				  ?>
 				</div> <!-- end pagition -->
 			</div> <!-- end table div -->
+			<div id="user_details">
+			</div>
 		</div><!-- end col -->
+
 	</div> <!-- end row -->
 </div> <!-- end container -->
 
+<script type="text/javascript">
+	setInterval(function(){
+  fetch_user();
+ }, 3000);
+
+ function fetch_user(){
+  $.ajax({
+   url:"<?php echo base_url(); ?>User/fetch_user",
+   method:"POST",
+   success:function(data){    
+    $('#user_details').html(data);
+   }
+  });
+ }
+</script>

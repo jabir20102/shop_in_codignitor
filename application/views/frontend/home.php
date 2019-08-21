@@ -1,4 +1,4 @@
-<div class="owl-carousel owl-theme default-carousel nav-0 blog-single-slider fables-second-dots"> 
+<!-- <div class="owl-carousel owl-theme default-carousel nav-0 blog-single-slider fables-second-dots"> 
                                   <div class="fables-after-overlay">
                                       <a href="#">
                                         <img src="<?php echo base_url('uploads/products/images/slider3.jpg')?>" alt="" class="w-100">
@@ -14,7 +14,14 @@
                                         <img src="<?php echo base_url('uploads/products/images/slider3.jpg')?>" alt="" class="w-100">
                                       </a>
                                   </div>   
-</div>
+</div> -->
+<!-- Start Header -->
+<div class="fables-header fables-after-overlay">
+    <div class="container"> 
+         <h2 class="fables-page-title fables-second-border-color">Store</h2>
+    </div>
+</div>  
+<!-- /End Header -->
 <!--Start Breadcrumbs -->
 <div class="fables-light-gary-background">
     <div class="container"> 
@@ -89,7 +96,7 @@
                    <div class=" col-sm-6 col-md-4 col-lg-3 fables-product-block">
                            <div class="card rounded-0 mb-4">
                                <div class="row"> 
-                                   <div class="fables-product-img col-12">
+                                   <div class="fables-product-img image-container shine-effect col-12">
                                     <?php  if($isOffer!=null){
                                           echo '<span  class="sale fables-second-background-color text-center">
                                         '.($isOffer->percent*100).'% Off</span>';

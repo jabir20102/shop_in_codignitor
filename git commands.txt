@@ -1,0 +1,11 @@
+
+
+"?it init                    initialed project for git
+git add -A                  add to git
+git status
+git commit -m "msg"
+git remote add origin https://github.com/jabir20102/shop_in_codignitor.git
+git push origin master
+
+git clone www.gethub...
+git pull origin master

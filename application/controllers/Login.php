@@ -5,6 +5,7 @@ class Login extends CI_Controller{
 
 	public function __construct(){
 		parent::__construct();
+		// date_default_timezone_set('Asia/Karachi');
 	}
 
 	// FOE LOGIN PAGE
@@ -43,6 +44,10 @@ class Login extends CI_Controller{
 					$this->session->set_userdata('student_name', $result->name);
 					$this->session->set_userdata('student_email', $result->email);
 					$this->session->set_userdata('student_login', true);
+					// set login details
+					$login_details_id=$this->user_model->set_login_details($result->id);
+					$this->session->set_userdata('login_details_id', $login_details_id);
+
 					redirect(base_url('user'), 'refresh');
 				}
 				else{
@@ -59,6 +64,12 @@ class Login extends CI_Controller{
 		
 
 	}
+	/// it is called from user side 
+	public function update_last_activity(){
+		  echo $this->user_model->m_update_last_activity();
+
+	}
+	
 }
 
 ?>

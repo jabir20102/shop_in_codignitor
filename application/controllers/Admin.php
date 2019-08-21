@@ -342,6 +342,7 @@ class Admin extends CI_Controller{
 				$stdnt_id = $this->input->post('student-id');
 				$result = $this->user_model->delete_student($stdnt_id);
 				$error = $this->db->error();
+				
 
 				if($result){
 					// if student is successfuly deleted
@@ -543,6 +544,45 @@ class Admin extends CI_Controller{
 			$data['page_title'] = 'Orders';
 			$data['page_name'] = 'orders';
 			$data['active'] = 'orders';
+			$this->load->view('backend/index', $data, FALSE);
+		}
+		else{
+			// if admin is not loggedin
+			redirect(base_url('admin'),'refresh');
+		}
+
+	}
+	//    chat box
+	public function chat_box(){
+
+		if($this->session->userdata('admin_login')){
+			// if admin is logged in loads up the admin profile page
+			$id= $this->input->get('id');
+			$username= $this->input->get('user_name');
+
+			$user = $this->user_model->get_students('',$id);
+    if($user->image_url == ''){
+        $image_src = base_url('uploads/backend/user_image/placeholder.png');
+    }
+    else{
+        $image_src = base_url($user->image_url);
+    }
+    $result = $this->user_model->get_admin($this->session->userdata('admin_email'));
+    if($result->image_url == ''){
+        $admin_src = base_url('uploads/backend/user_image/placeholder.png');
+    }
+    else{
+        $admin_src = base_url($result->image_url);
+    }
+
+
+			$data['img_src']=$image_src;	
+			$data['admin_src']=$admin_src;		
+			$data['page_title'] = 'Chat with '.$username;
+			$data['page_name'] = 'chat_box';
+			$data['active'] = 'chat_box';
+			$data['user_name'] = $username;
+			$data['id'] = $id;
 			$this->load->view('backend/index', $data, FALSE);
 		}
 		else{
@@ -839,8 +879,8 @@ public function viewUser($id){
 		         'protocol'  => 'smtp',
 		         'smtp_host' => 'smtp.googlemail.com',
 		         'smtp_port' => 465,
-		         'smtp_user' => '', //  your gmail email
-		         'smtp_pass' => '', //  your gmail password 
+		         'smtp_user' => 'mjabir42@gmail.com', 
+		         'smtp_pass' => 'yourpass', 
 		         'mailtype'  => 'html',
 		         'charset'  => 'iso-8859-1',
 		         'smtp_crypto'   => 'ssl',
